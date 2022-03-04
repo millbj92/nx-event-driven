@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"nx run main-site:serve\" \"nx run dashboard:serve --port=3001\" \"nx run auth:serve --port=3002\" \"nx run auth-service:serve\"",
+    "start": "nx run-many --target=serve --parallel=true --maxParallel=4 --projects=auth,dashboard,main-site,auth-service",
     "build": "nx build",
     "test": "nx test"
   },
@@ -57,9 +57,11 @@
     "@apollo/client": "^3.5.10",
     "@nestjs/apollo": "^10.0.6",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.2.0",
     "@nestjs/core": "^8.0.0",
     "@nestjs/cqrs": "^8.0.3",
     "@nestjs/graphql": "^10.0.6",
+    "@nestjs/jwt": "^8.0.0",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.0.3",

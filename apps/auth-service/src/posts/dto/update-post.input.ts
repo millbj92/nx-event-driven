@@ -17,5 +17,5 @@ export class UpdatePostInput extends PartialType(CreatePostInput) {
   published?: boolean;
 
   @Field(() => String, { description: 'Author of the post' })
-  authorId?: string;
+  authorId: string;
 }

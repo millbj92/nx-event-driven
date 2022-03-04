@@ -1,7 +1,8 @@
 import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
-import { PostsService } from './../posts/posts.service';
+import { PrismaService } from '../app/prisma.service';
 import { CreateUserInput } from './dto/create-user.input';
+import { LoginUserInput } from './dto/login-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -10,14 +11,8 @@ import { UsersService } from './users.service';
 export class UsersResolver {
   constructor(
     private readonly usersService: UsersService,
-    private readonly postsService: PostsService
+    private readonly prismaService: PrismaService
   ) {}
-
-  @Mutation(() => User)
-  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-    return this.usersService.create(createUserInput);
-  }
-
   @Query(() => [User], { name: 'users' })
   findAll() {
     return this.usersService.findAll();
@@ -26,6 +21,21 @@ export class UsersResolver {
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => ID }) id: string) {
     return this.usersService.findOne(id);
+  }
+
+  @Query(() => User)
+  async me(@Args('id', { type: () => ID }) id: string) {
+    return this.usersService.findOne(id);
+  }
+
+  @Query(() => String, { name: 'jwt' })
+  async login(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+    return this.usersService.login(loginUserInput);
+  }
+
+  @Mutation(() => User)
+  async register(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.usersService.register(createUserInput);
   }
 
   @Mutation(() => User)
@@ -41,6 +51,6 @@ export class UsersResolver {
   @ResolveField()
   async posts(@Parent() user: User) {
     const { id } = user;
-    return this.postsService.findAllByUserId(id);
+    return this.prismaService.post.findMany({ where: { authorId: id } });
   }
 }

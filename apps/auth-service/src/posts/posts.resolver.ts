@@ -1,6 +1,6 @@
 import { Args, ID, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 
-import { UsersService } from './../users/users.service';
+import { PrismaService } from '../app/prisma.service';
 import { CreatePostInput } from './dto/create-post.input';
 import { UpdatePostInput } from './dto/update-post.input';
 import { Post } from './entities/post.entity';
@@ -10,7 +10,7 @@ import { PostsService } from './posts.service';
 export class PostsResolver {
   constructor(
     private readonly postsService: PostsService,
-    private readonly userService: UsersService
+    private readonly prismaService: PrismaService
   ) {}
 
   @Mutation(() => Post)
@@ -41,6 +41,6 @@ export class PostsResolver {
   @ResolveField()
   async author(@Parent() post: Post) {
     const { authorId } = post;
-    return this.userService.findOne(authorId);
+    return this.prismaService.user.findUnique({ where: { id: authorId } });
   }
 }

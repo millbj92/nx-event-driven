@@ -42,11 +42,18 @@ export class PostsService {
     return post;
   }
 
-  update(id: string, updatePostInput: UpdatePostInput) {
-    // const post = await this.prismaService.post.update(updatePostInput);
-    // console.debug('Posts.update:', post);
-    // return post;
-    return `This action updates a #${id} post`;
+  async update(id: string, updatePostInput: UpdatePostInput) {
+    const transfer = {
+      where: {
+        id,
+      },
+      data: {
+        ...updatePostInput,
+      },
+    };
+    const post = await this.prismaService.post.update(transfer);
+    console.debug('Posts.update:', post);
+    return post;
   }
 
   async remove(id: string) {

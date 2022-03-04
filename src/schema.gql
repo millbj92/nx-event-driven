@@ -55,13 +55,23 @@ type Query {
   post(id: ID!): Post!
   users: [User!]!
   user(id: ID!): User!
+  me(id: ID!): User!
+  jwt(loginUserInput: LoginUserInput!): String!
+}
+
+input LoginUserInput {
+  """User Email for login"""
+  email: String!
+
+  """User Password for login"""
+  password: String!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  createUser(createUserInput: CreateUserInput!): User!
+  register(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: ID!): User!
 }
