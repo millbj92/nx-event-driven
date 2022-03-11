@@ -15,7 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@super-rad-poc/model": ["libs/model/src/index.ts"]
+      "@super-rad-poc/model": ["libs/model/src/index.ts"],
+      "@super-rad-poc/queries": ["libs/queries/src/index.ts"],
+      "@super-rad-poc/ui/components": ["libs/ui/components/src/index.ts"],
+      "@super-rad-poc/ui/hooks": ["libs/ui/hooks/src/index.ts"],
+      "@super-rad-poc/ui/styles": ["libs/ui/styles/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

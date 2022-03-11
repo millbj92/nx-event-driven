@@ -2,3 +2,5 @@
 
 /dist
 /coverage
+
+webpack.config.js

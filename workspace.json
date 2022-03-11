@@ -1,13 +1,12 @@
 {
   "version": 2,
   "projects": {
-    "auth": "apps/auth",
-    "auth-e2e": "apps/auth-e2e",
-    "auth-service": "apps/auth-service",
-    "dashboard": "apps/dashboard",
-    "dashboard-e2e": "apps/dashboard-e2e",
-    "main-site": "apps/main-site",
-    "main-site-e2e": "apps/main-site-e2e",
-    "model": "libs/model"
+    "auth": "apps/auth/ui",
+    "auth-service": "apps/auth/auth-service",
+    "home": "apps/home/ui",
+    "main": "apps/main/ui",
+    "model": "libs/model",
+    "queries": "libs/queries",
+    "ui": "libs/ui"
   }
 }

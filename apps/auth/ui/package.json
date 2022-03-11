@@ -1,0 +1,9 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "name=auth webpack --config=../../../tools/webpack.config.js --mode production",
+    "dev": "name=auth webpack-dev-server --config=../../../tools/webpack.config.js"
+  }
+}

@@ -56,22 +56,15 @@ type Query {
   users: [User!]!
   user(id: ID!): User!
   me(id: ID!): User!
-  jwt(loginUserInput: LoginUserInput!): String!
-}
-
-input LoginUserInput {
-  """User Email for login"""
-  email: String!
-
-  """User Password for login"""
-  password: String!
+  findByEmail(email: String!): User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   removePost(id: ID!): Post!
-  register(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): String!
+  register(createUserInput: CreateUserInput!): String!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: ID!): User!
 }
@@ -107,6 +100,14 @@ input UpdatePostInput {
   id: ID!
 }
 
+input LoginUserInput {
+  """User Email for login"""
+  email: String!
+
+  """User Password for login"""
+  password: String!
+}
+
 input CreateUserInput {
   """Users Name"""
   name: String!
@@ -130,4 +131,11 @@ input UpdateUserInput {
 
   """Primary key of user"""
   id: ID!
+}
+
+type Subscription {
+  userCreated: String!
+  userUpdated: String!
+  userRemoved: String!
+  userLoggedIn: String!
 }
