@@ -2,6 +2,7 @@
   "root": "apps/main/ui",
   "sourceRoot": "apps/main/ui/src",
   "projectType": "application",
+
   "targets": {
     "serve": {
       "executor": "@nrwl/workspace:run-commands",

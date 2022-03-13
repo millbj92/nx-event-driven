@@ -1,0 +1,23 @@
+{
+  "root": "libs/design/components",
+  "sourceRoot": "libs/design/components/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/design/components/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/design/components"],
+      "options": {
+        "jestConfig": "libs/design/components/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

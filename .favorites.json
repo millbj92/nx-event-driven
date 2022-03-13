@@ -1,0 +1,19 @@
+[
+    {
+        "type": "Group",
+        "name": "poc",
+        "parent_id": null,
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "QFjD5myVe3KqbsAd"
+    },
+    {
+        "type": "Directory",
+        "name": "c:\\Projects\\nx-event-driven",
+        "parent_id": null,
+        "fsPath": "c:\\Projects\\nx-event-driven",
+        "workspaceRoot": null,
+        "workspacePath": null,
+        "id": "OA7HQ8p04uPUdcon"
+    }
+]

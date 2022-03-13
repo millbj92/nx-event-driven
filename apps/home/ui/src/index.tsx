@@ -1,3 +1,4 @@
+import { LoadingSpinner } from '@super-rad-poc/design/components';
 import React, { Suspense } from 'react';
 import styled from 'styled-components';
 
@@ -16,7 +17,7 @@ const HomeContainer = styled.div`
 
 const Home = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<LoadingSpinner />}>
       <HomeContainer>
         <PostText />
         <Posts />

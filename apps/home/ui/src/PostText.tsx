@@ -1,9 +1,12 @@
-import { CardToolbar, PostButton, PostForm, PostTextArea } from '@super-rad-poc/ui/styles';
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import {
+  CardToolbar,
+  PostButton,
+  PostForm,
+  FormTextArea,
+} from '@super-rad-poc/design/styles';
+import React, { useEffect, useState } from 'react';
 
-type Props = {};
-
-export default function PostText({}: Props) {
+export default function PostText() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -17,8 +20,12 @@ export default function PostText({}: Props) {
     setContent('');
   }, []);
   return (
-    <PostForm style={{ marginBottom: '4rem' }} onSubmit={handleSubmit}>
-      <PostTextArea
+    <PostForm
+      width={[1, 3 / 4, 2 / 3]}
+      style={{ marginBottom: '4rem' }}
+      onSubmit={handleSubmit}
+    >
+      <FormTextArea
         name="postText"
         placeholder="What's on your mind?"
         value={content}

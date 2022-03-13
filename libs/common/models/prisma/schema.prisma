@@ -1,0 +1,109 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  createdAt     DateTime
+  updatedAt     DateTime
+  posts         Post[]
+  comments      Comment[]
+  notifications Notification[]
+}
+
+model Post {
+  id        String      @id @default(cuid())
+  title     String
+  content   String?
+  published Boolean?    @default(false)
+  author    User?       @relation(fields: [authorId], references: [id])
+  authorId  String
+  comments  Comment[]
+  images    PostImage[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  author    User?    @relation(fields: [authorId], references: [id])
+  authorId  String
+  post      Post?    @relation(fields: [postId], references: [id])
+  postId    String
+  createdAt DateTime
+  updatedAt DateTime
+}
+
+model PostImage {
+  id        String   @id @default(cuid())
+  post      Post?    @relation(fields: [postId], references: [id])
+  postId    String
+  name      String?
+  path      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model UserImage {
+  id           String      @id @default(cuid())
+  userId       String
+  name         String?
+  path         String
+  photoAlbum   PhotoAlbum? @relation(fields: [photoAlbumId], references: [id])
+  photoAlbumId String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @default(now())
+}
+
+model PhotoAlbum {
+  id        String      @id @default(cuid())
+  name      String
+  path      String
+  images    UserImage[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now())
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model PostTag {
+  id        String   @id @default(cuid())
+  postId    String
+  tagId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model UserTag {
+  id        String   @id @default(cuid())
+  userId    String
+  tagId     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String
+  type      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

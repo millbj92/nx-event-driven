@@ -1,4 +1,4 @@
-import { useClickedOutside, useWindowSize } from '@super-rad-poc/ui/hooks';
+import { useClickedOutside, useWindowSize } from '@super-rad-poc/common/hooks';
 import {
   Nav as StyledNav,
   NavBurger,
@@ -11,9 +11,9 @@ import {
   NavStart,
   NavTextPrimary,
   NavTextSecondary,
-} from '@super-rad-poc/ui/styles';
+} from '@super-rad-poc/design/styles';
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'wouter';
 
 export const Nav = () => {
   const [burgerActive, setBurgerActive] = useState(false);
@@ -40,7 +40,7 @@ export const Nav = () => {
       <NavStart>
         <Link to="/">
           <NavMain>
-            <span>
+            <span style={{ cursor: 'pointer' }}>
               <NavTextPrimary>Micro</NavTextPrimary>
               <NavTextSecondary>Social</NavTextSecondary>
             </span>
@@ -51,10 +51,10 @@ export const Nav = () => {
         {!isBurgerVisible && (
           <NavButtons>
             <NavButton>
-              <Link to="/home">Home</Link>
+              <Link href="/home">Home</Link>
             </NavButton>
             <NavButton>
-              <Link to="/auth">Login / Register</Link>
+              <Link href="/auth">Login / Register</Link>
             </NavButton>
           </NavButtons>
         )}

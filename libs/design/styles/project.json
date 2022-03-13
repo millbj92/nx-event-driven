@@ -1,0 +1,23 @@
+{
+  "root": "libs/design/styles",
+  "sourceRoot": "libs/design/styles/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/design/styles/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/design/styles"],
+      "options": {
+        "jestConfig": "libs/design/styles/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

@@ -15,11 +15,13 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@super-rad-poc/model": ["libs/model/src/index.ts"],
-      "@super-rad-poc/queries": ["libs/queries/src/index.ts"],
-      "@super-rad-poc/ui/components": ["libs/ui/components/src/index.ts"],
-      "@super-rad-poc/ui/hooks": ["libs/ui/hooks/src/index.ts"],
-      "@super-rad-poc/ui/styles": ["libs/ui/styles/src/index.ts"]
+      "@super-rad-poc/common/hooks": ["libs/common/hooks/src/index.ts"],
+      "@super-rad-poc/common/models": ["libs/common/models/src/index.ts"],
+      "@super-rad-poc/common/queries": ["libs/common/queries/src/index.ts"],
+      "@super-rad-poc/design/components": [
+        "libs/design/components/src/index.ts"
+      ],
+      "@super-rad-poc/design/styles": ["libs/design/styles/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

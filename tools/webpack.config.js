@@ -145,7 +145,8 @@ const baseConfig = async () => {
           uniqueName: remoteName,
           path: path.resolve(__dirname, `../apps/dist`),
           chunkFilename: (devMode || showFilenames) ? `${remoteName}/[name].js` : `${remoteName}/[contenthash].js`,
-          filename: (devMode || showFilenames) ? `${remoteName}/[name].js` : `${remoteName}/[contenthash].js`
+          filename: (devMode || showFilenames) ? `${remoteName}/[name].js` : `${remoteName}/[contenthash].js`,
+          assetModuleFilename: 'images/[name][ext]',
       },
       devtool: 'source-map',
       optimization: {
@@ -161,18 +162,22 @@ const baseConfig = async () => {
       },
       module: {
           rules: [
-              {
-                  test: /\.jsx?$/,
-                  loader: require.resolve('babel-loader'),
-                  options: {
-                      presets: [require.resolve('@babel/preset-react')],
-                  },
-              },
-              {
-                  test: /\.tsx?$/,
-                  use: 'ts-loader',
-                  exclude: /node_modules/,
-              },
+            {
+              test: /\.(png|jpe?g|gif|jp2|webp)$/,
+              type: 'asset/resource'
+            },
+            {
+                test: /\.jsx?$/,
+                loader: require.resolve('babel-loader'),
+                options: {
+                    presets: [require.resolve('@babel/preset-react')],
+                },
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
           ],
       },
       devServer: {

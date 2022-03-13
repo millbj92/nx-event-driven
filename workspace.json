@@ -3,10 +3,12 @@
   "projects": {
     "auth": "apps/auth/ui",
     "auth-service": "apps/auth/auth-service",
+    "common-hooks": "libs/common/hooks",
+    "common-models": "libs/common/models",
+    "common-queries": "libs/common/queries",
+    "design-components": "libs/design/components",
+    "design-styles": "libs/design/styles",
     "home": "apps/home/ui",
-    "main": "apps/main/ui",
-    "model": "libs/model",
-    "queries": "libs/queries",
-    "ui": "libs/ui"
+    "main": "apps/main/ui"
   }
 }

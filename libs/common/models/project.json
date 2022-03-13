@@ -1,0 +1,79 @@
+{
+  "root": "libs/common/models",
+  "sourceRoot": "libs/common/models/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/common/models/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/common/models"],
+      "options": {
+        "jestConfig": "libs/common/models/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "prisma-generate": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma generate",
+        "cwd": "libs/common/models"
+      }
+    },
+    "migrate-save": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma migrate dev --create-only --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    },
+    "migrate-up": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma migrate dev --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    },
+    "migrate-reset": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma migrate reset --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    },
+    "migrate-deploy": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma migrate deploy --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    },
+    "migrate-status": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma migrate status --preview-feature --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    },
+    "studio": {
+      "executor": "@nrwl/workspace:run-commands",
+      "outputs": [],
+      "options": {
+        "command": "../../../node_modules/.bin/prisma studio --schema ./prisma/schema.prisma",
+        "cwd": "libs/common/models"
+      }
+    }
+  },
+  "tags": []
+}

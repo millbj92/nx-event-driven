@@ -1,5 +1,13 @@
 import { gql, useQuery } from '@apollo/client';
-import { Card, CardBody, CardDate, CardHeader, CardImage, CardTitle } from '@super-rad-poc/ui/styles';
+import { LoadingSpinner } from '@super-rad-poc/design/components';
+import {
+  Card,
+  CardBody,
+  CardDate,
+  CardHeader,
+  CardImage,
+  CardTitle,
+} from '@super-rad-poc/design/styles';
 import moment from 'moment';
 
 interface PostForCard {
@@ -31,7 +39,7 @@ export function Posts() {
   if (error) console.log(JSON.stringify(error, null, 2));
   return (
     <>
-      {loading && <p>Loading...</p>}
+      {loading && <LoadingSpinner />}
       {error && <p>Error: {error.message}</p>}
 
       {data &&
