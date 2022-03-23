@@ -11,11 +11,14 @@ export class Tag {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => String, {nullable:true})
-    userId!: string | null;
+    @Field(() => String, {nullable:false})
+    userId!: string;
 
     @Field(() => String, {nullable:true})
     postId!: string | null;
+
+    @Field(() => String, {nullable:true})
+    commentId!: string | null;
 
     @Field(() => String, {nullable:false})
     description!: string;

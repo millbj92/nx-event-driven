@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloGatewayDriverConfig, ApolloGatewayDriver } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-
+import { SharedModule } from '@super-rad-poc/services/shared';
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloGatewayDriverConfig>({
@@ -12,7 +12,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
         playground: false,
         plugins: [ApolloServerPluginLandingPageLocalDefault],
         cors: {
-          origin: 'https://studio.apollographql.com',
+          origin: '*',
           credentials: true,
         },
       },
@@ -52,7 +52,8 @@ import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
           ],
         }),
       },
-    }),
+    }), 
+   
   ],
   controllers: [],
   providers: [],

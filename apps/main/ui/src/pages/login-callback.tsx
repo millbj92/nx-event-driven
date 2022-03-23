@@ -1,12 +1,10 @@
 import { LoadingSpinner } from '@super-rad-poc/design/components';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useLocation as useWouterLocation } from 'wouter';
+import { useNavigate } from 'react-router-dom';
 import { Subtitle } from '@super-rad-poc/design/styles';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useStore } from './../store';
-
-interface Props {}
+import { useStore } from '@super-rad-poc/common/hooks';
 
 const StyledCallbackPage = styled.div`
   display: flex;
@@ -20,23 +18,13 @@ const StyledCallbackPage = styled.div`
 `;
 
 export const LoginCallback = () => {
-  const [location, setLocation] = useWouterLocation();
+  const navigate = useNavigate();
   const {
     user: auth0User,
     isAuthenticated: isAuth,
     isLoading,
     getAccessTokenSilently,
-    getIdTokenClaims,
   } = useAuth0();
-  const {
-    name,
-    picture,
-    email,
-    email_verified,
-    given_name,
-    family_name,
-    profile,
-  } = auth0User || {};
   const { setIsAuthenticated, setUser, setToken } = useStore();
   useEffect(() => {
     async function getToken() {
@@ -45,29 +33,26 @@ export const LoginCallback = () => {
     }
     if (!isAuth && !isLoading) {
       setIsAuthenticated(false);
-      setLocation('/');
+      navigate('/');
     }
     if (isAuth && !isLoading) {
-      setLocation('/home');
-      setUser({
-        name,
-        picture,
-        email,
-        email_verified,
-        given_name,
-        family_name,
-        profile,
-      });
-      console.log(getIdTokenClaims());
+      setUser(auth0User);
       getToken();
       setIsAuthenticated(true);
+      navigate('/home');
     }
-  });
+  }, [
+    isAuth,
+    isLoading,
+    setIsAuthenticated,
+    setUser,
+    setToken,
+    getAccessTokenSilently,
+    auth0User,
+  ]);
 
   return (
     <StyledCallbackPage>
-      <Subtitle>Just a sec!</Subtitle>
-      <br />
       <LoadingSpinner />
     </StyledCallbackPage>
   );

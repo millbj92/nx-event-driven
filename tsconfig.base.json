@@ -23,7 +23,8 @@
       "@super-rad-poc/design/components": [
         "libs/design/components/src/index.ts"
       ],
-      "@super-rad-poc/design/styles": ["libs/design/styles/src/index.ts"]
+      "@super-rad-poc/design/styles": ["libs/design/styles/src/index.ts"],
+      "@super-rad-poc/services/shared": ["libs/services/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

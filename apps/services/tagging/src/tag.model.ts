@@ -24,7 +24,7 @@ export class Tag {
     postId?: string;
 
     @Field(() => String, {nullable:true})
-    comentId?: string;
+    commentId?: string;
 
     @Field(() => String, {nullable:false})
     description!: string;
@@ -53,7 +53,7 @@ export class TagAggregate extends AggregateRoot {
         public readonly name: string,
         public readonly userId: string,
         public readonly postId: string,
-        public readonly comentId: string,
+        public readonly commentId: string,
         public readonly description: string,
         public readonly createdAt: Date,
         public readonly updatedAt: Date

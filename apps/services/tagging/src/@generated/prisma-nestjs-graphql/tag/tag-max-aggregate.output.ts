@@ -17,6 +17,9 @@ export class TagMaxAggregate {
     postId?: string;
 
     @Field(() => String, {nullable:true})
+    commentId?: string;
+
+    @Field(() => String, {nullable:true})
     description?: string;
 
     @Field(() => Date, {nullable:true})

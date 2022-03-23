@@ -13,11 +13,14 @@ export class TagGroupBy {
     @Field(() => String, {nullable:false})
     name!: string;
 
-    @Field(() => String, {nullable:true})
-    userId?: string;
+    @Field(() => String, {nullable:false})
+    userId!: string;
 
     @Field(() => String, {nullable:true})
     postId?: string;
+
+    @Field(() => String, {nullable:true})
+    commentId?: string;
 
     @Field(() => String, {nullable:false})
     description!: string;

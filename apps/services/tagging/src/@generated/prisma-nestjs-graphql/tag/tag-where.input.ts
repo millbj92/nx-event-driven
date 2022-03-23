@@ -22,8 +22,8 @@ export class TagWhereInput {
     @Field(() => StringFilter, {nullable:true})
     name?: StringFilter;
 
-    @Field(() => StringNullableFilter, {nullable:true})
-    userId?: StringNullableFilter;
+    @Field(() => StringFilter, {nullable:true})
+    userId?: StringFilter;
 
     @Field(() => StringNullableFilter, {nullable:true})
     postId?: StringNullableFilter;

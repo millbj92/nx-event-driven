@@ -10,9 +10,12 @@ import { UsersResolver } from './users_connection/user.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CommandHandlers, QueryHandlers, EventHandlers, PostsSaga } from './cqrs';
-
+import {  JwtGuard, JwtStrategy, SharedModule } from '@super-rad-poc/services/shared';
+import { APP_GUARD } from '@nestjs/core';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   providers: [
+    ConfigService,
     PostService,
     PrismaService,
     PostResolver,

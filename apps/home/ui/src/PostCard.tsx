@@ -9,6 +9,8 @@ import {
   CardTitle,
 } from '@super-rad-poc/design/styles';
 import moment from 'moment';
+import { ALL_POSTS } from '@super-rad-poc/common/queries';
+import { useStore } from '@super-rad-poc/common/hooks';
 
 interface PostForCard {
   title: string;
@@ -21,21 +23,12 @@ interface IPostReturnData {
   posts: PostForCard[];
 }
 
-const GET_POSTS = gql`
-  query GetPosts {
-    posts {
-      title
-      content
-      authorId
-      author {
-        name
-      }
-    }
-  }
-`;
-
 export function Posts() {
-  const { data, loading, error } = useQuery<IPostReturnData>(GET_POSTS);
+  const { data, loading, error } = useQuery<IPostReturnData>(ALL_POSTS, {
+    variables: {
+      where: {},
+    },
+  });
   if (error) console.log(JSON.stringify(error, null, 2));
   return (
     <>

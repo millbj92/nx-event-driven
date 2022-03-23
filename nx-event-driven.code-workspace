@@ -5,6 +5,13 @@
     }
   ],
   "settings": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "vscode-color-picker.languages": [
+      "python",
+      "javascript",
+      "typescript",
+      "typescriptreact",
+      "javascriptreact"
+    ]
   }
 }

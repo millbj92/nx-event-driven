@@ -6,16 +6,18 @@ import { PostWhereInput } from './@generated/prisma-nestjs-graphql/post/post-whe
 import { GraphQLResolveInfo } from 'graphql';
 import { PostWhereUniqueInput } from './@generated/prisma-nestjs-graphql/post/post-where-unique.input';
 import { PostUpdateInput } from './@generated/prisma-nestjs-graphql/post/post-update.input';
-
+import { AuthorizationGuard} from '@super-rad-poc/services/shared';
 import { PostAggregateArgs } from './@generated/prisma-nestjs-graphql/post/post-aggregate.args';
 import { PrismaSelect } from '@paljs/plugins';
 import { User } from './users_connection/user.model';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Post)
 export class PostResolver {
   constructor(private readonly postService: PostService) {}
 
   @Mutation(() => Post)
+  @UseGuards(AuthorizationGuard)
   async createPost(
     @Args('createPostInput') createPostInput: PostCreateInput
   ) {
@@ -23,6 +25,7 @@ export class PostResolver {
   }
 
   @Query(() => [Post], { name: 'posts' })
+  @UseGuards(AuthorizationGuard)
   async posts(
     @Args('where') where: PostWhereInput,
     @Info() info: GraphQLResolveInfo) {
@@ -41,6 +44,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post, { name: 'updatePost', nullable: true })
+  @UseGuards(AuthorizationGuard)
   updatePost(
     @Args('postUpdateInput') postUpdateInput: PostUpdateInput
   ) {
@@ -48,6 +52,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post, { name: 'removePost', nullable: true })
+  @UseGuards(AuthorizationGuard)
   removePost(where: PostWhereUniqueInput) {
     return this.postService.remove(where);
   }

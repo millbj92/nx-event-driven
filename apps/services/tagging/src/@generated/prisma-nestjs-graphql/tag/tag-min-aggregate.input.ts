@@ -17,6 +17,9 @@ export class TagMinAggregateInput {
     postId?: true;
 
     @Field(() => Boolean, {nullable:true})
+    commentId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     description?: true;
 
     @Field(() => Boolean, {nullable:true})

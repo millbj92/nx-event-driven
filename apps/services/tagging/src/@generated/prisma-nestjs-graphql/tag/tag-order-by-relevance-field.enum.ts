@@ -5,6 +5,7 @@ export enum TagOrderByRelevanceFieldEnum {
     name = "name",
     userId = "userId",
     postId = "postId",
+    commentId = "commentId",
     description = "description"
 }
 

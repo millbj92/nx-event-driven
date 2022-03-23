@@ -15,11 +15,17 @@ export const ALL_POSTS_BY_USER = gql`
 `;
 
 export const ALL_POSTS = gql`
-  query AllPosts {
-    posts {
-      content
-    }
+query Posts($where: PostWhereInput!) {
+  posts(where: $where) {
+  authorId,
+  content,
+  createdAt,
+  published
+  files {
+    path
+  }  
   }
+}
 `;
 
 //User Queries

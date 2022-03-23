@@ -1,3 +1,4 @@
+
 const path = require('path');
 const crypto = require('crypto');
 const { hashElement } = require('folder-hash');
@@ -126,7 +127,7 @@ const getFederatedPlugin = async(remoteName) => {
                 ...customSharedLibs,
                 ...npmSharedLibs
             }
-        })
+        }),
     ];
 };
 
@@ -143,7 +144,7 @@ const baseConfig = async() => {
             path: path.resolve(__dirname, `../apps/dist`),
             chunkFilename: (devMode || showFilenames) ? `${remoteName}/[name].js` : `${remoteName}/[contenthash].js`,
             filename: (devMode || showFilenames) ? `${remoteName}/[name].js` : `${remoteName}/[contenthash].js`,
-            assetModuleFilename: 'images/[name][ext]',
+            
         },
         devtool: 'source-map',
         optimization: {
@@ -178,10 +179,13 @@ const baseConfig = async() => {
         },
         devServer: {
             hot: true,
-            https: {
-                key: fs.readFileSync('/mnt/c/Projects/sociium.io+4-key.pem'),
-                cert: fs.readFileSync('/mnt/c/Projects/sociium.io+4.pem'),
-                ca: fs.readFileSync('/mnt/c/Projects/rootCA.pem'),
+            server: {
+                type: 'https',
+                options: {
+                key: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4-key.pem')),
+                cert: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4.pem')),
+                ca: fs.readFileSync(path.resolve(__dirname, '../certs/rootCA.pem')),
+                }
             },
             devMiddleware: {
                 writeToDisk: Boolean(writeToDisk)

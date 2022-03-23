@@ -1,10 +1,12 @@
 import * as customValidators from './lib/custom-validators';
 
 export * from './lib/shared.module';
+export * from './lib/guards';
+export * from './lib/plugins';
+export * from './lib/decorators';
 export * from './lib/providers';
-export * from './lib/prisma.service';
-export * from './lib/throttler-guard';
-
+export * from './lib/strategies';
+export * from './lib/authorization';
 
 export {
   customValidators

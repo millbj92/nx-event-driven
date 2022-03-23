@@ -18,6 +18,9 @@ export class TagMinOrderByAggregateInput {
     postId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    commentId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     description?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

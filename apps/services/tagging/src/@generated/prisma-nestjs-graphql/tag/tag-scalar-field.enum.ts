@@ -5,6 +5,7 @@ export enum TagScalarFieldEnum {
     name = "name",
     userId = "userId",
     postId = "postId",
+    commentId = "commentId",
     description = "description",
     createdAt = "createdAt",
     updatedAt = "updatedAt"

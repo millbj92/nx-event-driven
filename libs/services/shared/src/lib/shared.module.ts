@@ -1,18 +1,12 @@
-import { CqrsModule } from '@nestjs/cqrs';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { pubSubProvider, PUB_SUB, RateLimitingProvider} from './providers';
-import { PrismaService } from './prisma.service';
-import { PubSub } from 'graphql-subscriptions';
+import { ComplexityPlugin } from './plugins/complexity.plugin';
 import { ThrottlerModule } from '@nestjs/throttler';
-
-
+import { RateLimitingProvider } from './providers/rate-limiting-provider';
+import { GraphQLSchemaHost, GraphQLModule } from '@nestjs/graphql';
 @Module({
   imports: [
-    CqrsModule,
-    ConfigModule.forRoot({
-      isGlobal: true
-    }),
+    ConfigModule,
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -23,26 +17,13 @@ import { ThrottlerModule } from '@nestjs/throttler';
     }),
   ],
   providers: [
-    PrismaService,
-    pubSubProvider,
-    {
-      provide: PUB_SUB,
-      useValue: new PubSub(),
-    },
     ConfigService,
     RateLimitingProvider
   ],
   exports: [
-    PrismaService,
-    pubSubProvider,
-    {
-      provide: PUB_SUB,
-      useValue: new PubSub(),
-    },
-    CqrsModule,
     ConfigModule,
     ThrottlerModule,
-    RateLimitingProvider,
+    RateLimitingProvider
   ],
 })
 export class SharedModule {}
