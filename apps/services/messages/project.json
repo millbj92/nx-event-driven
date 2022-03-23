@@ -1,0 +1,113 @@
+{
+    "root": "apps/services/messages",
+    "sourceRoot": "apps/services/messages/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/services/messages",
+                "main": "apps/services/messages/src/main.ts",
+                "tsConfig": "apps/services/messages/tsconfig.app.json"
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [{
+                        "replace": "apps/services/messages/src/environments/environment.ts",
+                        "with": "apps/services/messages/src/environments/environment.prod.ts"
+                    }]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "services-messages:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/services/messages/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/services/messages"],
+            "options": {
+                "jestConfig": "apps/services/messages/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "prisma-generate": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma generate",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-dry": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate dev --create-only --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-force": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma db push --force-reset --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-up": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate dev --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-reset": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate reset --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-deploy": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate deploy --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "migrate-status": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate status --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        },
+        "studio": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma studio --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/messages"
+            }
+        }
+    },
+    "tags": []
+}

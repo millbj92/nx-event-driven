@@ -1,0 +1,53 @@
+{
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Comments",
+      "sourceMaps": true,
+      "port": 5000
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Files",
+      "sourceMaps": true,
+      "port": 5001
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Messages",
+      "sourceMaps": true,
+      "port": 5003
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Noifications",
+      "sourceMaps": true,
+      "port": 5004
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Posts",
+      "sourceMaps": true,
+      "port": 5005
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Tagging",
+      "sourceMaps": true,
+      "port": 5006
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Messages",
+      "sourceMaps": true,
+      "port": 5007
+    }
+  ]
+}

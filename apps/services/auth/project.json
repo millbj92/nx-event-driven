@@ -1,0 +1,50 @@
+{
+    "root": "apps/services/auth",
+    "sourceRoot": "apps/services/auth/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/services/auth",
+                "main": "apps/services/auth/src/main.ts",
+                "tsConfig": "apps/services/auth/tsconfig.app.json",
+                "assets": ["apps/services/auth/src/assets"]
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [{
+                        "replace": "apps/services/auth/src/environments/environment.ts",
+                        "with": "apps/services/auth/src/environments/environment.prod.ts"
+                    }]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "services-auth:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/services/auth/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/services/auth"],
+            "options": {
+                "jestConfig": "apps/services/auth/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

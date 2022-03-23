@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc",
+    "module": "commonjs",
+    "lib": ["es2018"],
+    "esModuleInterop": true,
+    "types": ["node"],
+    "emitDecoratorMetadata": true,
+    "target": "es2018"
+  },
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"],
+  "include": ["**/*.ts"]
+}

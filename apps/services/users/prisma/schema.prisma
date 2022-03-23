@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../../../../node_modules/@prisma/client/users"
+  previewFeatures = ["filterJson", "fullTextSearch"]
+}
+
+generator nestgraphql {
+    provider = "node ../../../node_modules/prisma-nestjs-graphql"
+    output = "../src/@generated/prisma-nestjs-graphql"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  password String
+  verified  Boolean @default(false)
+  verification String
+  isActive Boolean @default(true)
+  isBanned Boolean @default(false)
+  firstName String
+  lastName String
+  banDuration Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

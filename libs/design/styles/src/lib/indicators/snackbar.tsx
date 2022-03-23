@@ -4,6 +4,10 @@ import styled, { css, keyframes } from 'styled-components';
 import { Text } from '../typography';
 import { rgba } from 'polished';
 import { layout, LayoutProps, space, SpaceProps } from 'styled-system';
+import {
+  SnackbarNotification,
+  SnackbarProps,
+} from '@super-rad-poc/common/models';
 
 export type StyledSnackbarProps = {
   isOpen: boolean;
@@ -70,36 +74,6 @@ const StyledSnackbarContent = styled.div<StyledSnackbarProps & LayoutProps>`
   ${layout};
 `;
 
-const StyledSnackbarClose = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 2rem;
-  height: 2rem;
-  background-color: ${themeGet('colors.primary_text')};
-  color: ${themeGet('colors.primary')};
-  border-radius: ${themeGet('radii.default')};
-  box-shadow: ${themeGet('shadows.elevation_1')};
-`;
-
-const StyledSnackbarCloseIcon = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1.5rem;
-  height: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    fill: ${themeGet('colors.white')};
-  }
-`;
-
 const StyledSnackbarActionButton = styled.button`
   height: 100%;
   border: none;
@@ -142,30 +116,20 @@ const StyledSnackbarActionButton = styled.button`
   }
 `;
 
-export type SnackbarProps = {
-  isOpen: boolean;
-  message: string;
-  closeBtn: boolean;
-  action?: string;
-  onClose?: () => void;
-  onAction?: () => void;
-  readonly created: Date;
-};
-
 const snackbarDefaultProps: Partial<SnackbarProps> = {
   isOpen: true,
-  closeBtn: false,
-  created: new Date(),
+  createdAt: new Date(),
   action: 'close',
 };
 
 export const Snackbar = ({
+  id,
   isOpen,
   message,
-  closeBtn,
   action,
-  onClose,
-  onAction,
+  createdAt,
+  closeHandler,
+  actionHandler,
 }: SnackbarProps) => {
   const [isOpenState, setIsOpen] = useState(isOpen);
   const [isClosingState, setIsClosing] = useState(false);
@@ -187,12 +151,12 @@ export const Snackbar = ({
     setIsClosing(true);
     setTimeout(() => {
       setIsOpen(false);
-      if (onClose) onClose();
+      if (closeHandler) closeHandler();
     }, 500);
   };
 
   const handleActionButtonClick = () => {
-    if (onAction) onAction();
+    if (actionHandler) actionHandler();
     handleClose();
   };
 
@@ -209,21 +173,6 @@ export const Snackbar = ({
             {action}
           </StyledSnackbarActionButton>
         )}
-
-        {closeBtn && (
-          <StyledSnackbarClose onClick={handleClose}>
-            <StyledSnackbarCloseIcon>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-              </svg>
-            </StyledSnackbarCloseIcon>
-          </StyledSnackbarClose>
-        )}
       </StyledSnackbarContent>
     </StyledSnackbar>
   );
@@ -231,10 +180,34 @@ export const Snackbar = ({
 
 Snackbar.defaultProps = snackbarDefaultProps;
 
+export const SnackManager = () => {
+  const [snacks, setSnacks] = useState<SnackbarNotification[]>([]);
+  const addSnack = (snack: SnackbarProps) => {
+    setSnacks((snacks) => [...snacks, snack]);
+  };
+
+  const removeSnack = (id: string) => {
+    setSnacks((snacks) => snacks.filter((snack) => snack.id !== id));
+  };
+
+  return (
+    <>
+      {snacks &&
+        snacks.map((snack) => (
+          <Snackbar
+            key={snack.id}
+            {...snack}
+            closeHandler={() => {
+              setSnacks(snacks.filter((s) => s.id !== snack.id));
+            }}
+          />
+        ))}
+    </>
+  );
+};
+
 export {
   StyledSnackbar,
   StyledSnackbarContent,
-  StyledSnackbarClose,
-  StyledSnackbarCloseIcon,
   StyledSnackbarActionButton,
 };

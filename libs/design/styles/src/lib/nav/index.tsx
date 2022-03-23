@@ -89,13 +89,16 @@ export const NavMenuItem = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 0.5rem;
+  cursor: pointer;
 
-  & > a {
+  & > a,
+  span {
     font-size: 1rem;
     position: relative;
     width: 100%;
     height: 100%;
     text-decoration: none;
+    outline: none;
 
     color: ${themeGet('colors.primary')};
 
@@ -127,7 +130,8 @@ export const NavMenuItem = styled.div`
   }
 
   &:hover {
-    & > a {
+    & > a,
+    span {
       color: ${themeGet('colors.white')};
 
       &::before {
@@ -240,12 +244,14 @@ export const NavButton = styled.button`
 
   &:hover {
     background-color: ${themeGet('colors.primary_light')};
-    & > a {
+    & > a,
+    span {
       color: ${themeGet('colors.background')};
     }
   }
 
-  & > a {
+  & > a,
+  span {
     color: ${themeGet('colors.primary_light')};
     text-decoration: none;
   }

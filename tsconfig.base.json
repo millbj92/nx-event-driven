@@ -15,9 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@super-rad-poc/common/events": ["libs/common/events/src/index.ts"],
       "@super-rad-poc/common/hooks": ["libs/common/hooks/src/index.ts"],
       "@super-rad-poc/common/models": ["libs/common/models/src/index.ts"],
       "@super-rad-poc/common/queries": ["libs/common/queries/src/index.ts"],
+      "@super-rad-poc/desgn/icons": ["libs/design/icons/src/index.ts"],
       "@super-rad-poc/design/components": [
         "libs/design/components/src/index.ts"
       ],

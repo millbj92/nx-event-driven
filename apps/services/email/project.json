@@ -1,0 +1,50 @@
+{
+    "root": "apps/services/email",
+    "sourceRoot": "apps/services/email/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/services/email",
+                "main": "apps/services/email/src/main.ts",
+                "tsConfig": "apps/services/email/tsconfig.app.json",
+                "assets": ["apps/services/email/src/assets"]
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [{
+                        "replace": "apps/services/email/src/environments/environment.ts",
+                        "with": "apps/services/email/src/environments/environment.prod.ts"
+                    }]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "services-email:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/services/email/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/services/email"],
+            "options": {
+                "jestConfig": "apps/services/email/jest.config.js",
+                "passWithNoTests": true
+            }
+        }
+    },
+    "tags": []
+}

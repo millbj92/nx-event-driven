@@ -1,5 +1,6 @@
 import themeGet from '@styled-system/theme-get';
 import styled from 'styled-components';
+import { PostIcon } from '@super-rad-poc/desgn/icons';
 
 export type SvgButtonProps = {
   rounded?: boolean;
@@ -81,7 +82,8 @@ export const AccentLink = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  & > a {
+  & > a,
+  span {
     width: 100%;
     height: 100%;
     display: flex;
@@ -92,6 +94,7 @@ export const AccentLink = styled.span`
     border: none;
     outline: none;
     text-decoration: none;
+    cursor: pointer;
 
     background-color: ${themeGet('colors.accent')};
     color: ${themeGet('colors.white')};
@@ -117,13 +120,7 @@ export const AccentLink = styled.span`
 export const PostButton = (props: SvgButtonProps) => {
   return (
     <StyledSvgButtonWithIcon type="submit" value="Post" {...props}>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96.17 81.45">
-        <g id="Layer_2" data-name="Layer 2">
-          <g id="Layer_1-2" data-name="Layer 1">
-            <polygon points="29.77 51.79 1.56 46.12 94.77 1.23 43.04 80.38 32.3 54.06 82.57 11.55 29.77 51.79" />
-          </g>
-        </g>
-      </svg>
+      <PostIcon />
     </StyledSvgButtonWithIcon>
   );
 };

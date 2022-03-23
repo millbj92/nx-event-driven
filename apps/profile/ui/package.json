@@ -1,0 +1,9 @@
+{
+    "name": "profile",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "build": "name=profile webpack --config=../../../tools/webpack.config.js --mode production",
+        "dev": "name=profile webpack-dev-server --config=../../../tools/webpack.config.js"
+    }
+}

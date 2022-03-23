@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+  output = "../../../../node_modules/@prisma/client/tags"
+  previewFeatures = ["filterJson", "fullTextSearch"]
+}
+
+generator nestgraphql {
+    provider = "node ../../../node_modules/prisma-nestjs-graphql"
+    output = "../src/@generated/prisma-nestjs-graphql"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Tag {
+  id String @id @default(cuid())
+  name String
+  userId String
+  postId String?
+  commentId String?
+  description String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}

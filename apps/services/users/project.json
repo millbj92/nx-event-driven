@@ -1,0 +1,113 @@
+{
+    "root": "apps/services/users",
+    "sourceRoot": "apps/services/users/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nrwl/node:webpack",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/services/users",
+                "main": "apps/services/users/src/main.ts",
+                "tsConfig": "apps/services/users/tsconfig.app.json"
+            },
+            "configurations": {
+                "production": {
+                    "optimization": true,
+                    "extractLicenses": true,
+                    "inspect": false,
+                    "fileReplacements": [{
+                        "replace": "apps/services/users/src/environments/environment.ts",
+                        "with": "apps/services/users/src/environments/environment.prod.ts"
+                    }]
+                }
+            }
+        },
+        "serve": {
+            "executor": "@nrwl/node:node",
+            "options": {
+                "buildTarget": "services-users:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["apps/services/users/**/*.ts"]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/services/users"],
+            "options": {
+                "jestConfig": "apps/services/users/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "prisma-generate": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma generate",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-dry": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate dev --create-only --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-force": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma db push --force-reset --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-up": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate dev --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-reset": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate reset --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-deploy": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate deploy --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "migrate-status": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma migrate status --preview-feature --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        },
+        "studio": {
+            "executor": "@nrwl/workspace:run-commands",
+            "outputs": [],
+            "options": {
+                "command": "../../../node_modules/.bin/prisma studio --schema ./prisma/schema.prisma",
+                "cwd": "apps/services/users"
+            }
+        }
+    },
+    "tags": []
+}

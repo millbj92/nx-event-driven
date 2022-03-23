@@ -1,14 +1,26 @@
 {
-  "version": 2,
-  "projects": {
-    "auth": "apps/auth/ui",
-    "auth-service": "apps/auth/auth-service",
-    "common-hooks": "libs/common/hooks",
-    "common-models": "libs/common/models",
-    "common-queries": "libs/common/queries",
-    "design-components": "libs/design/components",
-    "design-styles": "libs/design/styles",
-    "home": "apps/home/ui",
-    "main": "apps/main/ui"
-  }
+    "version": 2,
+    "projects": {
+        "profile": "apps/profile/ui",
+        "common-events": "libs/common/events",
+        "common-hooks": "libs/common/hooks",
+        "common-models": "libs/common/models",
+        "common-queries": "libs/common/queries",
+        "design-components": "libs/design/components",
+        "design-icons": "libs/design/icons",
+        "design-styles": "libs/design/styles",
+        "gateway": "apps/services/gateway",
+        "home": "apps/home/ui",
+        "main": "apps/main/ui",
+        "services-auth": "apps/services/auth",
+        "services-comments": "apps/services/comments",
+        "services-email": "apps/services/email",
+        "services-files": "apps/services/files",
+        "services-messages": "apps/services/messages",
+        "services-notifications": "apps/services/notifications",
+        "services-posts": "apps/services/posts",
+        "services-tagging": "apps/services/tagging",
+        "services-users": "apps/services/users",
+        "shared": "libs/services/shared"
+    }
 }

@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react';
 import { useClickedOutside, useWindowSize } from '@super-rad-poc/common/hooks';
 import {
   Nav as StyledNav,
@@ -14,17 +15,35 @@ import {
 } from '@super-rad-poc/design/styles';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'wouter';
+import { useStore } from './store';
 
 export const Nav = () => {
+  const { isAuthenticated, setIsAuthenticated } = useStore();
   const [burgerActive, setBurgerActive] = useState(false);
   const [isBurgerVisible, setIsBurgerVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindowSize();
+  const {
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated: loggedIn,
+    isLoading,
+  } = useAuth0();
   function clickedOutside() {
     setBurgerActive(false);
   }
+
+  const onLoginClicked = () => {
+    setBurgerActive(false);
+    loginWithRedirect();
+  };
+
   useClickedOutside([menuRef], clickedOutside);
   useEffect(() => {
+    if (loggedIn) setIsAuthenticated(true);
+    else setIsAuthenticated(false);
+
     if (!windowSize || !windowSize.width) return;
 
     if (windowSize.width > 768) {
@@ -33,7 +52,7 @@ export const Nav = () => {
     } else {
       setIsBurgerVisible(true);
     }
-  }, [windowSize]);
+  }, [windowSize, loggedIn]);
 
   return (
     <StyledNav ref={menuRef}>
@@ -41,8 +60,8 @@ export const Nav = () => {
         <Link to="/">
           <NavMain>
             <span style={{ cursor: 'pointer' }}>
-              <NavTextPrimary>Micro</NavTextPrimary>
-              <NavTextSecondary>Social</NavTextSecondary>
+              <NavTextPrimary>Soci</NavTextPrimary>
+              <NavTextSecondary>ium</NavTextSecondary>
             </span>
           </NavMain>
         </Link>
@@ -50,12 +69,22 @@ export const Nav = () => {
       <NavEnd>
         {!isBurgerVisible && (
           <NavButtons>
-            <NavButton>
-              <Link href="/home">Home</Link>
-            </NavButton>
-            <NavButton>
-              <Link href="/auth">Login / Register</Link>
-            </NavButton>
+            {isAuthenticated && (
+              <NavButton>
+                <Link href="/home">Home</Link>
+              </NavButton>
+            )}
+
+            {!isAuthenticated && (
+              <NavButton onClick={() => loginWithRedirect()}>
+                <span>Login</span>
+              </NavButton>
+            )}
+            {isAuthenticated && (
+              <NavButton onClick={() => logout()}>
+                <span>Logout</span>
+              </NavButton>
+            )}
           </NavButtons>
         )}
         {isBurgerVisible && (
@@ -65,15 +94,20 @@ export const Nav = () => {
               onClicked={() => setBurgerActive(!burgerActive)}
             />
             <NavMenu isActive={burgerActive}>
+              {isAuthenticated && (
+                <NavMenuItem>
+                  <Link onClick={() => setBurgerActive(false)} to="/home">
+                    Home
+                  </Link>
+                </NavMenuItem>
+              )}
               <NavMenuItem>
-                <Link onClick={() => setBurgerActive(false)} to="/home">
-                  Home
-                </Link>
-              </NavMenuItem>
-              <NavMenuItem>
-                <Link onClick={() => setBurgerActive(false)} to="/auth">
-                  Login/Register
-                </Link>
+                {isAuthenticated && (
+                  <span onClick={() => logout()}>Logout</span>
+                )}
+                {!isAuthenticated && (
+                  <span onClick={() => onLoginClicked()}>Login</span>
+                )}
               </NavMenuItem>
             </NavMenu>
           </>
