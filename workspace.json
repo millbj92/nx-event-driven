@@ -11,6 +11,7 @@
     "gateway": "apps/services/gateway",
     "home": "apps/home/ui",
     "main": "apps/main/ui",
+    "messages": "apps/messages/ui",
     "profile": "apps/profile/ui",
     "services-auth": "apps/services/auth",
     "services-comments": "apps/services/comments",
@@ -21,6 +22,7 @@
     "services-posts": "apps/services/posts",
     "services-tagging": "apps/services/tagging",
     "services-users": "apps/services/users",
-    "shared": "libs/services/shared"
+    "shared": "libs/services/shared",
+    "state": "apps/state/ui"
   }
 }

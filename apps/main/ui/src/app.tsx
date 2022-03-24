@@ -85,6 +85,7 @@ export const App = () => {
                 <Route path="*" element={<Error404 />} />
               </Routes>
             </Content>
+            <MicroApp remoteName="messages" moduleName="Messages" />
           </Suspense>
         </AuthorizedApolloProvider>
       </CustomThemeProvider>

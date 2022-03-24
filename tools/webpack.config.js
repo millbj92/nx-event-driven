@@ -93,7 +93,9 @@ const getFederatedPlugin = async(remoteName) => {
                 filename: 'remoteEntry.js',
                 remotes: {
                     'home': 'home',
-                    'profile': 'profile'
+                    'profile': 'profile',
+                    'state': 'state',
+                    'messages': 'messages'
                 },
                 shared: {
                     ...customSharedLibs,

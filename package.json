@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "license": "MIT",
     "scripts": {
-        "start": "nx run-many --target=serve --parallel=true --maxParallel=4 --projects=home,profile,main",
+        "start": "nx run-many --target=serve --parallel=true --maxParallel=4 --projects=home,state,messages,main",
         "build": "nx build",
         "test": "nx test",
         "serve": "node ./tools/serve",
@@ -101,7 +101,9 @@
         "@nestjs/microservices": "^8.4.1",
         "@nestjs/passport": "^8.2.1",
         "@nestjs/platform-express": "^8.0.0",
+        "@nestjs/platform-socket.io": "^8.4.2",
         "@nestjs/throttler": "^2.0.1",
+        "@nestjs/websockets": "^8.4.2",
         "@nrwl/nest": "^13.8.4",
         "@paljs/plugins": "^4.0.18",
         "@prisma/client": "^3.11.0",

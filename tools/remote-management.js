@@ -14,6 +14,14 @@ const portMappings = [
   {
     name: 'profile',
     port: 3000,
+  },
+  {
+    name: 'state',
+    port: 3003
+  },
+  {
+    name: 'messages',
+    port: 3004
   }
 ]
 

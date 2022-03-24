@@ -1,0 +1,9 @@
+{
+  "name": "state",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "name=state webpack --config=../../../tools/webpack.config.js --mode production",
+    "dev": "name=state webpack-dev-server --config=../../../tools/webpack.config.js"
+  }
+}

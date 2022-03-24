@@ -1,0 +1,9 @@
+{
+  "name": "messages",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "name=messages webpack --config=../../../tools/webpack.config.js --mode production",
+    "dev": "name=messages webpack-dev-server --config=../../../tools/webpack.config.js"
+  }
+}

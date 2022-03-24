@@ -1,0 +1,28 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": ["node"]
+  },
+  "files": [
+    "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
+    "../../../node_modules/@nrwl/react/typings/image.d.ts"
+  ],
+  "exclude": [
+    "../../messages/ui/**/*.spec.ts",
+    "../../messages/ui/**/*.test.ts",
+    "../../messages/ui/**/*.spec.tsx",
+    "../../messages/ui/**/*.test.tsx",
+    "../../messages/ui/**/*.spec.js",
+    "../../messages/ui/**/*.test.js",
+    "../../messages/ui/**/*.spec.jsx",
+    "../../messages/ui/**/*.test.jsx"
+  ],
+  "include": [
+    "../../messages/ui/**/*.js",
+    "../../messages/ui/**/*.jsx",
+    "../../messages/ui/**/*.ts",
+    "../../messages/ui/**/*.tsx",
+    "../../webpack.config.js"
+  ]
+}
