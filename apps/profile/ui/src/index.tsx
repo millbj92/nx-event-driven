@@ -1,7 +1,7 @@
 import { LoadingSpinner } from '@super-rad-poc/design/components';
 import { Suspense, lazy } from 'react';
 import styled from 'styled-components';
-import React, { Route, Switch, Redirect } from 'wouter';
+import { Route } from 'react-router-dom';
 import { useStore } from '@super-rad-poc/common/hooks';
 import { ProfilePage } from './pages/profile-page';
 

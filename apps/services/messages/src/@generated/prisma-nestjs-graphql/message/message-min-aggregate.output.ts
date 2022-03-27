@@ -8,10 +8,13 @@ export class MessageMinAggregate {
     id?: string;
 
     @Field(() => String, {nullable:true})
+    threadId?: string;
+
+    @Field(() => String, {nullable:true})
     text?: string;
 
-    @Field(() => Boolean, {nullable:true})
-    read?: boolean;
+    @Field(() => String, {nullable:true})
+    fromId?: string;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

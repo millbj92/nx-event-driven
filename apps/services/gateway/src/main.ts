@@ -13,5 +13,4 @@ async function bootstrap() {
 
   logger.info(`Gateway running on: http://localhost:${port}`);
 }
-
 bootstrap();

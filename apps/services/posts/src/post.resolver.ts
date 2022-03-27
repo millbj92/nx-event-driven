@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, Info, ResolveField, Parent, ResolveReference } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Info, ResolveField, Parent, ResolveReference, Context, Root } from '@nestjs/graphql';
 import { PostService } from './post.service';
 import { Post } from './post.model';
 import { PostCreateInput } from './@generated/prisma-nestjs-graphql/post/post-create.input';
@@ -10,7 +10,11 @@ import { AuthorizationGuard} from '@super-rad-poc/services/shared';
 import { PostAggregateArgs } from './@generated/prisma-nestjs-graphql/post/post-aggregate.args';
 import { PrismaSelect } from '@paljs/plugins';
 import { User } from './users_connection/user.model';
-import { UseGuards } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
+
+
+
+
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -25,12 +29,12 @@ export class PostResolver {
   }
 
   @Query(() => [Post], { name: 'posts' })
-  @UseGuards(AuthorizationGuard)
   async posts(
     @Args('where') where: PostWhereInput,
-    @Info() info: GraphQLResolveInfo) {
-    const select = new PrismaSelect(info).value;
-    return await this.postService.posts(where, info);
+    @Info() info: GraphQLResolveInfo
+    ) {
+    const select = new PrismaSelect(info);
+    return await this.postService.posts(where);
   }
 
   @Query(() => Post, { name: 'post', nullable: true })

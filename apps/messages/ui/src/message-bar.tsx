@@ -1,14 +1,19 @@
 import themeGet from '@styled-system/theme-get';
+import {
+  HeartIcon,
+  NotificationBell,
+  NotificationBellInverted,
+} from '@super-rad-poc/desgn/icons';
 import styled from 'styled-components';
+import { flexDirection } from 'styled-system';
 
 export const StyledMessageBar = styled.div`
   background-color: #f5f5f5;
   border-radius: 4px;
   box-shadow: ${themeGet('shadows.elevation_1')};
   border-top: 1px solid ${themeGet('colors.primary')};
-  padding: 15px;
+
   width: 100%;
-  max-height: 1rem;
 `;
 
 export const StyledMessageBarContent = styled.div`
@@ -53,6 +58,13 @@ export const StyledMessageBarMessages = styled.div`
   align-items: center;
 `;
 
+export const StyledMessageBarToolbar = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px;
+`;
+
 export const MessageBar = ({
   children,
   title,
@@ -64,7 +76,9 @@ export const MessageBar = ({
   <StyledMessageBar {...props}>
     <StyledMessageBarContent>
       <StyledMessageBarText>
-        {title && <StyledMessageBarTitle>{title}</StyledMessageBarTitle>}
+        <StyledMessageBarToolbar>
+          <NotificationBell />
+        </StyledMessageBarToolbar>
       </StyledMessageBarText>
       <StyledMessageBarMessages>{children}</StyledMessageBarMessages>
     </StyledMessageBarContent>

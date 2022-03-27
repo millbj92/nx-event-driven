@@ -4,38 +4,50 @@ import { ID } from '@nestjs/graphql';
 import { User } from './users_connection/user.model';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { MessageCreatedEvent, MessageDeletedEvent, MessageUpdatedEvent } from '@super-rad-poc/common/events';
+import { Thread } from './thread.model';
 
 @ObjectType()
 @Directive('@key(fields: "id")')
 export class Message {
 
-    @Field(() => ID, {nullable:false})
-    id!: string;
+  @Field(() => ID, {nullable:false})
+  id!: string;
 
-    @Field(() => String, {nullable:false})
-    text!: string;
+  @Field(() => String, {nullable:false})
+  threadId!: string;
 
-    @Field(() => Boolean, {nullable:false})
-    read!: boolean;
+  @Field(() => Thread, {nullable:false})
+  thread?: Thread;
 
-    @Field(() => [String], {nullable:true})
-    userIds!: Array<string>;
+  @Field(() => String, {nullable:false})
+  text!: string;
 
-    @Field(() => Date, {nullable:false})
-    createdAt!: Date;
+  @Field(() => String, {nullable:false})
+  fromId!: string;
 
-    @Field(() => [User], {nullable:true})
-    users?: User[];
+  @Field(() => [String], {nullable:true})
+  participants!: Array<string>;
+
+  @Field(() => [String], {nullable:true})
+  participantReadIds!: Array<string>;
+
+  @Field(() => Date, {nullable:false})
+  createdAt!: Date;
+
+  @Field(() => [User], {nullable:true})
+  users?: User[];
 }
 
 
 export class MessageAggregate extends AggregateRoot{
     constructor(
-        public readonly id: string,
-        public readonly userIds: string[],
+       public readonly id: string,
+        public readonly threadId: string,
         public readonly text: string,
-        public readonly read: boolean,
-        public readonly createdAt: Date
+        public readonly fromId: string,
+        public readonly participants: Array<string>,
+        public readonly participantReadIds: Array<string>,
+        public readonly createdAt: Date,
     ) {
         super();
     }

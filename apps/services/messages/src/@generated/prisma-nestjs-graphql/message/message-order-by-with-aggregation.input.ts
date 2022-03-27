@@ -12,13 +12,19 @@ export class MessageOrderByWithAggregationInput {
     id?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    threadId?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     text?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    read?: keyof typeof SortOrder;
+    fromId?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
-    userIds?: keyof typeof SortOrder;
+    participants?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    participantReadIds?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
     createdAt?: keyof typeof SortOrder;

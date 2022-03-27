@@ -16,6 +16,7 @@ export const BaseTheme: Theme = {
     white: '#FFFFFF',
     background: '#e8e9eb',
     accent: '#e20c69',
+
     gray: '#9b9b9b',
     gray_light: '#f5f5f5',
     light_text: '#fafafa',

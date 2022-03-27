@@ -1,23 +1,33 @@
 generator client {
-  provider = "prisma-client-js"
-  output = "../../../../node_modules/@prisma/client/messages"
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@prisma/client/messages"
   previewFeatures = ["filterJson", "fullTextSearch"]
 }
 
 generator nestgraphql {
-    provider = "node ../../../node_modules/prisma-nestjs-graphql"
-    output = "../src/@generated/prisma-nestjs-graphql"
+  provider = "node ../../../node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated/prisma-nestjs-graphql"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
+}
+
+model Thread {
+  id           String    @id @default(cuid())
+  messages     Message[] 
+  createdAt    DateTime  @default(now())
 }
 
 model Message {
-  id String @id @default(cuid())
-  text String
-  read Boolean
-  userIds String[]
-  createdAt DateTime @default(now())
+  id                 String   @id @default(cuid())
+  threadId           String   
+  thread             Thread   @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  text               String
+  fromId             String
+   participants String[]
+  participantReadIds String[]
+  createdAt          DateTime @default(now())
+  
 }

@@ -12,7 +12,7 @@ export class TagsSaga {
       ofType(TagCreatedEvent),
       filter(event => event.tag.id !== undefined),
       map(event => {
-        const tagEvent = EventFactory.tagEvent("TAG_CREATED", event.tag, 1);
+        const tagEvent = EventFactory.tagEvent("tag.created", event.tag, 1);
         return  new SendKafkaCommand(tagEvent)
       })
     );
@@ -24,7 +24,7 @@ export class TagsSaga {
       ofType(TagDeletedEvent),
       filter(event => event.tag.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.tagEvent("TAG_DELETED", event.tag, 1);
+        const newEvent = EventFactory.tagEvent("tag.deleted", event.tag, 1);
         return new SendKafkaCommand(newEvent);
       })
     );
@@ -36,7 +36,7 @@ export class TagsSaga {
       ofType(TagUpdatedEvent),
       filter(event => event.tag.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.tagEvent("TAG_UPDATED", event.tag, 1);
+        const newEvent = EventFactory.tagEvent("tag.updated", event.tag, 1);
         return new SendKafkaCommand(newEvent);
       })
     );

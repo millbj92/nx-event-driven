@@ -12,7 +12,9 @@ import { User } from './users_connection/user.model';
 
 @Resolver(() => Notification)
 export class NotificationResolver {
-  constructor(private readonly notificationService: NotificationService) {}
+  constructor(
+    private readonly notificationService: NotificationService
+    ) {}
 
   @Mutation(() => Notification)
   async createNotification(

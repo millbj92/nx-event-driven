@@ -21,6 +21,6 @@ export class UsersResolver {
         equals: user.id
       }
     };
-    return await this.postService.posts(where, info);
+    return await this.postService.posts(where);
   }
 }

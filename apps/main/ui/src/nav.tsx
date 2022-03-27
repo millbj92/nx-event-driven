@@ -1,4 +1,4 @@
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth } from '@super-rad-poc/design/components';
 import { useClickedOutside, useWindowSize } from '@super-rad-poc/common/hooks';
 import {
   Nav as StyledNav,
@@ -12,11 +12,12 @@ import {
   NavStart,
   NavTextPrimary,
   NavTextSecondary,
+  NavLink,
 } from '@super-rad-poc/design/styles';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useStore } from '@super-rad-poc/common/hooks';
-
+import { useNavigate } from 'react-router-dom';
 type AuthNavBtnProps = {
   logout: () => void;
 };
@@ -38,8 +39,8 @@ type UnauthNavProps = {
 };
 const UnauthNavButtons = ({ loginWithRedirect }: UnauthNavProps) => {
   return (
-    <NavButton onClick={() => loginWithRedirect()}>
-      <span>Login</span>
+    <NavButton>
+      <Link to="/login">Login</Link>
     </NavButton>
   );
 };
@@ -60,13 +61,10 @@ const BurgerAuthButtons = ({ logout }: BurgerAuthProps) => {
   );
 };
 
-type BurgerUnauthProps = {
-  loginWithRedirect: () => void;
-};
-const BurgerUnauthButtons = ({ loginWithRedirect }: BurgerUnauthProps) => {
+const BurgerUnauthButtons = () => {
   return (
     <NavMenuItem>
-      <span onClick={() => loginWithRedirect()}>Login</span>
+      <NavLink to="/login">Login</NavLink>
     </NavMenuItem>
   );
 };
@@ -77,7 +75,7 @@ export const Nav = () => {
   const [isBurgerVisible, setIsBurgerVisible] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const windowSize = useWindowSize();
-  const { loginWithRedirect, logout, isAuthenticated: loggedIn } = useAuth0();
+  const { onLogout, token } = useAuth();
   function clickedOutside() {
     setBurgerActive(false);
   }
@@ -88,7 +86,7 @@ export const Nav = () => {
 
   useClickedOutside([menuRef], clickedOutside);
   useEffect(() => {
-    if (loggedIn) setIsAuthenticated(true);
+    if (token) setIsAuthenticated(true);
     else setIsAuthenticated(false);
 
     if (!windowSize || !windowSize.width) return;
@@ -99,7 +97,7 @@ export const Nav = () => {
     } else {
       setIsBurgerVisible(true);
     }
-  }, [windowSize, loggedIn]);
+  }, [windowSize, token]);
 
   return (
     <StyledNav ref={menuRef}>
@@ -120,11 +118,9 @@ export const Nav = () => {
               <Link to={isAuthenticated ? '/home' : '/'}>Home</Link>
             </NavButton>
             {!isAuthenticated ? (
-              <UnauthNavButtons
-                loginWithRedirect={() => loginWithRedirect({})}
-              />
+              <UnauthNavButtons loginWithRedirect={() => onLogout(() => {})} />
             ) : (
-              <AuthenticatedNavButtons logout={() => logout()} />
+              <AuthenticatedNavButtons logout={() => onLogout(() => {})} />
             )}
           </NavButtons>
         )}
@@ -139,11 +135,9 @@ export const Nav = () => {
                 <Link to={isAuthenticated ? '/home' : '/'}>Home</Link>
               </NavMenuItem>
               {isAuthenticated ? (
-                <BurgerAuthButtons logout={() => logout()} />
+                <BurgerAuthButtons logout={() => () => {}} />
               ) : (
-                <BurgerUnauthButtons
-                  loginWithRedirect={() => loginWithRedirect()}
-                />
+                <BurgerUnauthButtons />
               )}
             </NavMenu>
           </>

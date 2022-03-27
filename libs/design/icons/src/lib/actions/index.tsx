@@ -12,7 +12,7 @@ export const PostIcon = () => {
   );
 };
 
-export const CloseIcon: BMIOIcon = () => {
+export const CloseIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80.5 80">
       <g id="Layer_2" data-name="Layer 2">
@@ -25,7 +25,7 @@ export const CloseIcon: BMIOIcon = () => {
   );
 };
 
-export const EditIcon: BMIOIcon = () => {
+export const EditIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.51 81.52">
       <defs></defs>
@@ -44,7 +44,7 @@ export const EditIcon: BMIOIcon = () => {
   );
 };
 
-export const DeleteIcon: BMIOIcon = () => {
+export const DeleteIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 57.88 81.25">
       <g id="Layer_2" data-name="Layer 2">
@@ -58,7 +58,7 @@ export const DeleteIcon: BMIOIcon = () => {
   );
 };
 
-export const AddIcon: BMIOIcon = () => {
+export const AddIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 79.99 79.2">
       <g id="Layer_2" data-name="Layer 2">
@@ -71,7 +71,7 @@ export const AddIcon: BMIOIcon = () => {
   );
 };
 
-export const HeartIcon: BMIOIcon = () => {
+export const HeartIcon = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 78.45 92.39">
       <g id="Layer_2" data-name="Layer 2">

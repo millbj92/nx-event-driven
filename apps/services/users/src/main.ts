@@ -11,7 +11,6 @@ import { KafkaOptions, Transport } from '@nestjs/microservices';
 
 const microserviceConfig: KafkaOptions = {
   transport: Transport.KAFKA,
-
   options: {
     client: {
       brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],

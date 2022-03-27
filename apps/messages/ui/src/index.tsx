@@ -1,7 +1,10 @@
 import themeGet from '@styled-system/theme-get';
+import { useStore } from '@super-rad-poc/common/hooks';
+import { NotificationBell } from '@super-rad-poc/desgn/icons';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { MessageBar } from './message-bar';
 import { MessageBox } from './message-box';
+import { MessageHandler } from './message-handler';
 
 const StyledMessageBarContainer = styled.div`
   display: flex;
@@ -18,15 +21,7 @@ const StyledMessageBarContainer = styled.div`
 `;
 
 const Messages = () => {
-  return (
-    <StyledMessageBarContainer>
-      <MessageBar title="messages">
-        <MessageBox />
-        <MessageBox />
-        <MessageBox />
-      </MessageBar>
-    </StyledMessageBarContainer>
-  );
+  return <MessageHandler />;
 };
 
 export { Messages };

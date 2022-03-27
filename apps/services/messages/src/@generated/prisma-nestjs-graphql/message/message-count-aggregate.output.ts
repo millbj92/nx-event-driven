@@ -9,13 +9,19 @@ export class MessageCountAggregate {
     id!: number;
 
     @Field(() => Int, {nullable:false})
+    threadId!: number;
+
+    @Field(() => Int, {nullable:false})
     text!: number;
 
     @Field(() => Int, {nullable:false})
-    read!: number;
+    fromId!: number;
 
     @Field(() => Int, {nullable:false})
-    userIds!: number;
+    participants!: number;
+
+    @Field(() => Int, {nullable:false})
+    participantReadIds!: number;
 
     @Field(() => Int, {nullable:false})
     createdAt!: number;

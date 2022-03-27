@@ -17,9 +17,9 @@ export class UsersResolver {
     @Info() info: GraphQLResolveInfo,
     ): Promise<Message[]> {
     const where: MessageWhereInput = {
-        userIds: {
+       participants: {
           has: user.id
-        }
+        },
     };
     return await this.messageService.messages(where, info);
   }

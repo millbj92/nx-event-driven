@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
-import { MessageCreateuserIdsInput } from '../prisma/message-createuser-ids.input';
+import { MessageCreateparticipantsInput } from '../prisma/message-createparticipants.input';
+import { MessageCreateparticipantReadIdsInput } from '../prisma/message-createparticipant-read-ids.input';
 
 @InputType()
 export class MessageCreateManyInput {
@@ -9,13 +10,19 @@ export class MessageCreateManyInput {
     id?: string;
 
     @Field(() => String, {nullable:false})
+    threadId!: string;
+
+    @Field(() => String, {nullable:false})
     text!: string;
 
-    @Field(() => Boolean, {nullable:false})
-    read!: boolean;
+    @Field(() => String, {nullable:false})
+    fromId!: string;
 
-    @Field(() => MessageCreateuserIdsInput, {nullable:true})
-    userIds?: MessageCreateuserIdsInput;
+    @Field(() => MessageCreateparticipantsInput, {nullable:true})
+    participants?: MessageCreateparticipantsInput;
+
+    @Field(() => MessageCreateparticipantReadIdsInput, {nullable:true})
+    participantReadIds?: MessageCreateparticipantReadIdsInput;
 
     @Field(() => Date, {nullable:true})
     createdAt?: Date | string;

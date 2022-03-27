@@ -12,7 +12,7 @@ export class MessagesSaga {
       ofType(MessageCreatedEvent),
       filter(event => event.message.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.messageEvent("MESSAGE_CREATED", event.message, 1);
+        const newEvent = EventFactory.messageEvent("message.created", event.message, 1);
         return new SendKafkaCommand(newEvent);
       })
     );
@@ -24,7 +24,7 @@ export class MessagesSaga {
       ofType(MessageDeletedEvent),
       filter(event => event.message.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.messageEvent("MESSAGE_DELETED", event.message, 1);
+        const newEvent = EventFactory.messageEvent("message.deleted", event.message, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );
@@ -36,7 +36,7 @@ export class MessagesSaga {
       ofType(MessageUpdatedEvent),
       filter(event => event.message.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.messageEvent("MESSAGE_UPDATED", event.message, 1);
+        const newEvent = EventFactory.messageEvent("message.updated", event.message, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );

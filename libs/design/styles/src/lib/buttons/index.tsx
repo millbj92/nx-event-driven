@@ -1,6 +1,7 @@
 import themeGet from '@styled-system/theme-get';
 import styled from 'styled-components';
 import { PostIcon } from '@super-rad-poc/desgn/icons';
+import { Link as RouterLink } from 'react-router-dom';
 
 export type SvgButtonProps = {
   rounded?: boolean;
@@ -76,44 +77,36 @@ export const AccentButton = styled.button`
   }
 `;
 
-export const AccentLink = styled.span`
+export const AccentLink = styled(RouterLink)`
   width: 8rem;
-  height: 1.5rem;
+  height: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  & > a,
-  span {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0.5rem;
-    border: none;
-    outline: none;
-    text-decoration: none;
-    cursor: pointer;
+  outline: none;
+  margin: 0;
+  padding: 0.5rem;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
 
-    background-color: ${themeGet('colors.accent')};
-    color: ${themeGet('colors.white')};
-    font-size: ${(props) => props.theme.fontSizes[2]};
-    font-family: ${themeGet('fonts.primary')};
-    border-radius: ${themeGet('radii.lg')};
+  background-color: ${themeGet('colors.accent')};
+  color: ${themeGet('colors.white')};
+  font-size: ${(props) => props.theme.fontSizes[2]};
+  font-family: ${themeGet('fonts.primary')};
+  border-radius: ${themeGet('radii.lg')};
+  box-shadow: ${themeGet('shadows.elevation_1')};
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.3);
+    box-shadow: ${themeGet('shadows.elevation_2')};
+  }
+
+  &:active {
+    transform: scale(1.1);
     box-shadow: ${themeGet('shadows.elevation_1')};
-
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-      transform: scale(1.3);
-      box-shadow: ${themeGet('shadows.elevation_2')};
-    }
-
-    &:active {
-      transform: scale(1.1);
-      box-shadow: ${themeGet('shadows.elevation_1')};
-    }
   }
 `;
 

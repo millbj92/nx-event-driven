@@ -16,7 +16,7 @@ describe('AppController', () => {
   describe('getData', () => {
     it('should return "Welcome to auth!"', () => {
       const appController = app.get<AppController>(AppController);
-      expect(appController.getData()).toEqual({ message: 'Welcome to auth!' });
+      expect(appController.jwks()).toEqual({ message: 'Welcome to auth!' });
     });
   });
 });

@@ -8,10 +8,13 @@ export class MessageMinAggregateInput {
     id?: true;
 
     @Field(() => Boolean, {nullable:true})
+    threadId?: true;
+
+    @Field(() => Boolean, {nullable:true})
     text?: true;
 
     @Field(() => Boolean, {nullable:true})
-    read?: true;
+    fromId?: true;
 
     @Field(() => Boolean, {nullable:true})
     createdAt?: true;

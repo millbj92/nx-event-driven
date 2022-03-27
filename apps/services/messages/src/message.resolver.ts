@@ -52,6 +52,6 @@ export class MessageResolver {
 
   @ResolveField((of) => [User], { name: 'users' })
     users(@Parent() message: Message): any {
-      return { __typename: 'User', id: message.userIds};
+      return { __typename: 'User', id: message.participants.map(x => x === message.fromId) };
     }
 }

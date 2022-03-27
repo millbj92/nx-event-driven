@@ -13,7 +13,7 @@ export class PostsSaga {
       ofType(PostCreatedEvent),
       filter(event => event.post.id !== undefined),
       map(event => {
-        const postEvent = EventFactory.postEvent("POST_CREATED", event.post, 1);
+        const postEvent = EventFactory.postEvent("post.created", event.post, 1);
         return new SendKafkaCommand(postEvent);
       }),
     );
@@ -25,7 +25,7 @@ export class PostsSaga {
       ofType(PostDeletedEvent),
       filter(event => event.post.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.postEvent("POST_DELETED", event.post, 1);
+        const newEvent = EventFactory.postEvent("post.deleted", event.post, 1);
         return new SendKafkaCommand(newEvent)
       })
     );
@@ -37,7 +37,7 @@ export class PostsSaga {
       ofType(PostUpdatedEvent),
       filter(event => event.post.id !== undefined),
       map(event => {
-        const fileEvent = EventFactory.postEvent("POST_UPDATED", event.post, 1);
+        const fileEvent = EventFactory.postEvent("post.updated", event.post, 1);
         return new SendKafkaCommand(fileEvent);
       }),
     );

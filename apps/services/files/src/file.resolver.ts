@@ -14,6 +14,8 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateFileCommand, DeleteFileCommand } from './cqrs/commands/interface';
 import { AllFilesQuery, OneFileQuery, FileAggregateQuery } from './cqrs/queries/interface/index';
 import { UpdateFileCommand } from './cqrs/commands/interface/index';
+import { UseGuards } from '@nestjs/common';
+import { AuthorizationGuard } from '@super-rad-poc/services/shared';
 
 @Resolver(() => File)
 export class FileResolver {
@@ -24,6 +26,7 @@ export class FileResolver {
     ) {}
 
   @Mutation(() => File)
+  @UseGuards(AuthorizationGuard)
   async createFile(
     @Args('createFileInput') createFileInput: FileCreateInput
   ) {
@@ -52,6 +55,7 @@ export class FileResolver {
   }
 
   @Mutation(() => File, { name: 'updateFile', nullable: true })
+  @UseGuards(AuthorizationGuard)
   updateFile(
     @Args('fileUpdateInput') fileUpdateInput: FileUpdateInput
   ) {
@@ -60,6 +64,7 @@ export class FileResolver {
   }
 
   @Mutation(() => File, { name: 'removeFile', nullable: true })
+  @UseGuards(AuthorizationGuard)
   removeFile(where: FileWhereUniqueInput) {
     return this.commandBus.execute(new DeleteFileCommand(where));
     //this.fileService.remove(where);

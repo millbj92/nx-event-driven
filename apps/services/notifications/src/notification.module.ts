@@ -10,20 +10,25 @@ import { UsersResolver } from './users_connection/user.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CommandHandlers, EventHandlers, QueryHandlers, NotificationsSaga } from './cqrs';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
 @Module({
+  controllers: [
+    AppController
+  ],
   imports: [
     CqrsModule,
     ClientsModule.register([
       {
-        name: process.env.KAFKA_SERVICE_NAME,
-        transport: Transport?.KAFKA,
+        name: "NOTIFICATION_SERVICE",
+        transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: process.env.KAFKA_CLIENT_ID,
+            clientId: 'notification-service',
             brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],
           },
           consumer: {
-            groupId: process.env.KAFKA_CONSUMER_GROUP_ID,
+            groupId: 'notification-service-consumer-client'
           }
         },
       },
@@ -37,6 +42,7 @@ import { CommandHandlers, EventHandlers, QueryHandlers, NotificationsSaga } from
     }),
   ],
   providers: [
+    AppService,
     PrismaService,
     NotificationService,
     NotificationResolver,

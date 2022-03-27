@@ -14,27 +14,27 @@ export interface IEventMetadata<T> {
 }
 
 type TypeName<T> =
-T extends Post ? "POST" :
-T extends User ? "USER" :
-T extends Message ? "MESSAGE" :
-T extends Comment ? "COMMENT" :
-T extends Notification ? "NOTIFICATION" :
-T extends Tag ? "TAG" :
-T extends File ? "FILE" :
+T extends Post ? "post" :
+T extends User ? "user" :
+T extends Message ? "message" :
+T extends Comment ? "comment" :
+T extends Notification ? "notification" :
+T extends Tag ? "tag" :
+T extends File ? "file" :
 T extends string ? T :
- "UNKNOWN";
+ "unknown";
 
 
 
-export type BaseEventType<T> = `${Uppercase<TypeName<T>>}_CREATED` | `${Uppercase<TypeName<T>>}_UPDATED` | `${Uppercase<TypeName<T>>}_DELETED`;
-export type UserEventType =  'USER_CREATED' | 'USER_UPDATED' | 'USER_ACTIVATED' | 'USER_DEACTIVATED' | 'USER_BANNED' | 'USER_UNBANNED' | 'USER_VERIFIED';
+export type BaseEventType<T> = `${Lowercase<TypeName<T>>}.created` | `${Lowercase<TypeName<T>>}.updated` | `${Lowercase<TypeName<T>>}.deleted`;
+export type UserEventType =  'user.created' | 'user.updated' | 'user.activated' | 'user.deactivated' | 'user.banned' | 'user.unbanned' | 'user.verified' | "user.loggedin" | "user.verification.resent";
 export type MessageEventType = BaseEventType<Message>;
-export type CommentEventType = BaseEventType<'COMMENT'>;
-export type ReactionEventType = BaseEventType<'REACTION'>;
-export type NotificationEventType = BaseEventType<'NOTIFICATION'>;
-export type PostEventType = BaseEventType<'POST'>;
-export type TagEventType = BaseEventType<'TAG'>;
-export type FileEventType = BaseEventType<'FILE'>;
+export type CommentEventType = BaseEventType<'comment'>;
+export type ReactionEventType = BaseEventType<'reaction'>;
+export type NotificationEventType = BaseEventType<'notification'>;
+export type PostEventType = BaseEventType<'post'>;
+export type TagEventType = BaseEventType<'tag'>;
+export type FileEventType = BaseEventType<'file'>;
 
 export type BaseEvent<T> = {
    topic:  T extends User ? UserEventType : BaseEventType<T>;

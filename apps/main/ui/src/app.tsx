@@ -5,14 +5,14 @@ import {
   InMemoryCache,
 } from '@apollo/client';
 import { CustomThemeProvider } from '@super-rad-poc/design/styles';
-import { PropsWithChildren, Suspense } from 'react';
+import { PropsWithChildren, Suspense, useEffect } from 'react';
 import styled from 'styled-components';
 import {
   AuthProvider,
   LoadingSpinner,
   ProtectedRoute,
+  useAuth,
 } from '@super-rad-poc/design/components';
-import { LoginCallback } from './pages/login-callback';
 import Error404 from './pages/error-404';
 import { LandingPage } from './landing-page';
 import { Nav } from './nav';
@@ -22,45 +22,44 @@ import { Route, Routes } from 'react-router-dom';
 import { Config } from './config';
 import { useAuth0 } from '@auth0/auth0-react';
 import { setContext } from '@apollo/link-context';
+import { VerificationPage } from './pages/verify';
+import { Login } from './pages/login';
+import { Register } from './pages/register';
+import Confirm from './pages/confirm';
+import { useStore } from '@super-rad-poc/common/hooks';
 
 type Props = {};
 
 const AuthorizedApolloProvider = ({ children }: PropsWithChildren<Props>) => {
-  const { getAccessTokenSilently } = useAuth0();
-
+  const { token } = useAuth();
   const httpLink = createHttpLink({
     uri: 'http://localhost:3333/graphql',
   });
-
-  const authLink = setContext(async () => {
-    const token = await getAccessTokenSilently();
+  const authLink = setContext((_, { headers }) => {
     return {
       headers: {
-        authorization: token ? `Bearer ${token}` : '',
+        ...headers,
+        authorization: token ? `Bearer ${token}` : null,
       },
     };
   });
-
   const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
     connectToDevTools: true,
   });
-
   return <ApolloProvider client={client}>{children}</ApolloProvider>;
 };
 
 const Content = styled.div`
-  padding: 0;
+  //overflow: hidden;
 `;
 
 export const App = () => {
+  const { isAuthenticated } = useStore();
+
   return (
-    <AuthProvider
-      domain={Config.Auth0.domain}
-      clientId={Config.Auth0.clientId}
-      redirectUri={Config.Auth0.redirectUri}
-    >
+    <AuthProvider>
       <CustomThemeProvider theme={Theme}>
         <AuthorizedApolloProvider>
           <Suspense fallback={<LoadingSpinner />}>
@@ -68,24 +67,39 @@ export const App = () => {
             <Content>
               <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/callback" element={<LoginCallback />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/verify" element={<VerificationPage />} />
+                <Route path="/confirm" element={<Confirm />} />
 
                 <Route
                   path="/home"
-                  element={<MicroApp remoteName="home" moduleName="Home" />}
+                  element={
+                    <ProtectedRoute
+                      isAuthenticated={isAuthenticated}
+                      outlet={<MicroApp remoteName="home" moduleName="Home" />}
+                    />
+                  }
                 />
 
                 <Route
                   path="/profile"
                   element={
-                    <MicroApp remoteName="profile" moduleName="Profile" />
+                    <ProtectedRoute
+                      isAuthenticated={isAuthenticated}
+                      outlet={
+                        <MicroApp remoteName="profile" moduleName="Profile" />
+                      }
+                    />
                   }
                 />
 
                 <Route path="*" element={<Error404 />} />
               </Routes>
+              <Suspense fallback={null}>
+                <MicroApp remoteName="messages" moduleName="Messages" />
+              </Suspense>
             </Content>
-            <MicroApp remoteName="messages" moduleName="Messages" />
           </Suspense>
         </AuthorizedApolloProvider>
       </CustomThemeProvider>

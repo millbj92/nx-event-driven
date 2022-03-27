@@ -2,8 +2,11 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum MessageOrderByRelevanceFieldEnum {
     id = "id",
+    threadId = "threadId",
     text = "text",
-    userIds = "userIds"
+    fromId = "fromId",
+    participants = "participants",
+    participantReadIds = "participantReadIds"
 }
 
 

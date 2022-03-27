@@ -1,7 +1,0 @@
-localhost:443 {
-  reverse_proxy localhost:3002
-  reverse_proxy /home localhost:3001
-  reverse_proxy /profile localhost:3000
-}
-
-

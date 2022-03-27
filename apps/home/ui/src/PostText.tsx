@@ -14,11 +14,6 @@ export default function PostText() {
     e.preventDefault();
     console.log(title, content);
   };
-
-  useEffect(() => {
-    setTitle('');
-    setContent('');
-  }, []);
   return (
     <PostForm
       width={[1, 3 / 4, 2 / 3]}

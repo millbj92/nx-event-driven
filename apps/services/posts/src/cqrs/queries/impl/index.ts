@@ -11,7 +11,7 @@ export class AllPostsQueryHandler {
 
     async execute(query: AllPostsQuery) {
         const { where } = query;
-        return this.service.posts(where, null);
+        return this.service.posts(where);
     }
 }
 

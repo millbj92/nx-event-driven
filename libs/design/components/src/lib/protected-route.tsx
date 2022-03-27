@@ -1,13 +1,37 @@
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import { PropsWithChildren } from 'react';
+import { Navigate } from 'react-router-dom';
+import { from } from 'rxjs';
+import { useAuth } from './auth-provider';
 
-export const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const { isAuthenticated } = useAuth0();
-  const location = useLocation();
-
-  if (!isAuthenticated) {
-    return <Navigate to="/" />;
-  }
-
-  return children;
+export type ProtectedRouteProps = {
+  isAuthenticated: boolean;
+  outlet: JSX.Element;
 };
+
+export function ProtectedRoute({
+  isAuthenticated,
+  outlet,
+}: ProtectedRouteProps) {
+  if (isAuthenticated) {
+    return outlet;
+  } else {
+    return (
+      <Navigate
+        to={{ pathname: '/login' }}
+        state={{ from: window.location.pathname }}
+      />
+    );
+  }
+}
+
+// export const ProtectedRoute = ({ children }: Props) => {
+//   const { token } = useAuth();
+
+//   if (!token) {
+//     return (
+//      <Navigate to="/login" />
+//     );
+//   }
+
+//   return children;
+// };

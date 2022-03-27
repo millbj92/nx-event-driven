@@ -8,10 +8,21 @@ import { UserWhereUniqueInput } from './@generated/prisma-nestjs-graphql/user/us
 import { UserUpdateInput } from './@generated/prisma-nestjs-graphql/user/user-update.input';
 
 import { UserAggregateArgs } from './@generated/prisma-nestjs-graphql/user/user-aggregate.args';
+import { UseGuards } from '@nestjs/common';
+import { AuthorizationGuard } from '@super-rad-poc/services/shared';
+
+import {
+  Ctx,
+  KafkaContext,
+  MessagePattern,
+  Payload
+} from '@nestjs/microservices';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService
+    ) {}
 
   @Mutation(() => User)
   async createUser(
@@ -38,6 +49,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User, { name: 'updateUser', nullable: true })
+  @UseGuards(AuthorizationGuard)
   updateUser(
     @Args('userUpdateInput') userUpdateInput: UserUpdateInput
   ) {
@@ -45,6 +57,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User, { name: 'removeUser', nullable: true })
+  @UseGuards(AuthorizationGuard)
   removeUser(where: UserWhereUniqueInput) {
     return this.userService.remove(where);
   }

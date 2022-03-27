@@ -7,16 +7,24 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
-import { getLogger } from '@super-rad-poc/common/models';
+import { KafkaOptions, Transport } from '@nestjs/microservices';
+
+
 
 async function bootstrap() {
-  const logger = getLogger();
-  const app = await NestFactory.create(AppModule);
-  const port = process.env.PORT || 5004;
-  await app.listen(port);
-  logger.info(
-    `Notifications service is running on http://localhost:${port}`
-  );
+  const app = await NestFactory.createMicroservice<KafkaOptions>(AppModule, {
+    transport: Transport.KAFKA,
+      options: {
+        client: {
+          brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],
+        },
+        consumer: {
+          groupId: 'notification-service-consumer'
+        }
+      }
+  });
+  app.listen();
+  Logger.log('Notifications is running.')
 }
 
 bootstrap();

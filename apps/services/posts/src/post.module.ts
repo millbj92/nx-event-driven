@@ -13,6 +13,7 @@ import { CommandHandlers, QueryHandlers, EventHandlers, PostsSaga } from './cqrs
 import {  JwtGuard, JwtStrategy, SharedModule } from '@super-rad-poc/services/shared';
 import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 @Module({
   providers: [
     ConfigService,
@@ -47,6 +48,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       autoSchemaFile: path.join(__dirname, '/schema.gql'),
       buildSchemaOptions: {
         orphanedTypes: [User]
+      },
+      context: ({ req }) => {
+        Logger.log(JSON.stringify(req.headers), "PostModule");
+        return {
+          req
+        };
       }
     }),
   ]

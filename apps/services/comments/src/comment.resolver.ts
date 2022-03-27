@@ -14,6 +14,8 @@ import { CreateCommentCommand, DeleteCommentCommand } from './cqrs/commands/inte
 import { AllCommentsQuery, OneCommentQuery, CommentAggregateQuery } from './cqrs/queries/interface/index';
 import { UpdateCommentCommand } from './cqrs/commands/interface/index';
 import { getLogger } from '@super-rad-poc/common/models';
+import { UseGuards } from '@nestjs/common';
+import { AuthorizationGuard } from '@super-rad-poc/services/shared';
 
 @Resolver(() => Comment)
 export class CommentResolver extends AggregateRoot<CommentAggregate> {
@@ -27,6 +29,7 @@ export class CommentResolver extends AggregateRoot<CommentAggregate> {
   }
 
   @Mutation(() => Comment)
+  @UseGuards(AuthorizationGuard)
   async createComment(
     @Args('createCommentInput') createCommentInput: CommentCreateInput
   ): Promise<CommentAggregate> {
@@ -63,6 +66,7 @@ export class CommentResolver extends AggregateRoot<CommentAggregate> {
   }
 
   @Mutation(() => Comment, { name: 'updateComment', nullable: true })
+  @UseGuards(AuthorizationGuard)
   updateComment(
     @Args('commentUpdateInput') commentUpdateInput: CommentUpdateInput
   ) {
@@ -72,6 +76,7 @@ export class CommentResolver extends AggregateRoot<CommentAggregate> {
   }
 
   @Mutation(() => Comment, { name: 'removeComment', nullable: true })
+  @UseGuards(AuthorizationGuard)
   async removeComment(where: CommentWhereUniqueInput) {
     return this.commandBus.execute<DeleteCommentCommand, CommentAggregate>(new DeleteCommentCommand(where));
     //this.commentService.remove(where);

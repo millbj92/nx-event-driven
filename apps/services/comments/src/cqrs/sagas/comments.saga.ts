@@ -14,7 +14,7 @@ export class CommentsSaga {
       ofType(CommentCreatedEvent),
       filter(event => event.comment.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.commentEvent("COMMENT_CREATED", event.comment, 1);
+        const newEvent = EventFactory.commentEvent("comment.created", event.comment, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );
@@ -26,7 +26,7 @@ export class CommentsSaga {
       ofType(CommentDeletedEvent),
       filter(event => event.comment.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.commentEvent("COMMENT_DELETED", event.comment, 1);
+        const newEvent = EventFactory.commentEvent("comment.deleted", event.comment, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );
@@ -38,7 +38,7 @@ export class CommentsSaga {
       ofType(CommentUpdatedEvent),
       filter(event => event.comment.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.commentEvent("COMMENT_UPDATED", event.comment, 1);
+        const newEvent = EventFactory.commentEvent("comment.updated", event.comment, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );

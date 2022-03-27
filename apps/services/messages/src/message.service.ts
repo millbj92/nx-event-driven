@@ -45,10 +45,13 @@ export class MessageService {
   }
 
   async messageAggregate(args: MessageAggregateArgs) {
-    return await this.prismaService.message.aggregate(args)
+    return await this.prismaService.message.aggregate({
+      where: args.where,
+      cursor: args.cursor,
+      take: args.take,
+      skip: args.skip,
+    })
   }
-
-
 
  async update(args: MessageUpdateInput) {
 

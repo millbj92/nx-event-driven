@@ -1,30 +1,71 @@
 generator client {
-  provider = "prisma-client-js"
-  output = "../../../../node_modules/@prisma/client/users"
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@prisma/client/users"
   previewFeatures = ["filterJson", "fullTextSearch"]
 }
 
 generator nestgraphql {
-    provider = "node ../../../node_modules/prisma-nestjs-graphql"
-    output = "../src/@generated/prisma-nestjs-graphql"
+  provider = "node ../../../node_modules/prisma-nestjs-graphql"
+  output   = "../src/@generated/prisma-nestjs-graphql"
 }
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id String @id @default(cuid())
-  email String @unique
-  password String
-  verified  Boolean @default(false)
-  verification String
-  isActive Boolean @default(true)
-  isBanned Boolean @default(false)
-  firstName String
-  lastName String
-  banDuration Int @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password     String
+  verified     Boolean  @default(false)
+  verification String   @unique
+  isActive     Boolean  @default(true)
+  isBanned     Boolean  @default(false)
+  firstName    String
+  lastName     String
+  banDuration  Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  claims       Claims?
+}
+
+model Claims {
+  sub                   String    @id @default(cuid())
+  userId                String    @unique
+  user                  User      @relation(fields: [userId], references: [id])
+  name                  String?
+  given_name            String?
+  family_name           String?
+  middle_name           String?
+  nickname              String?
+  preferred_username    String?
+  profile               String?
+  picture               String?
+  website               String?
+  email                 String?
+  email_verified        String?
+  gender                String?
+  birthdate             DateTime?
+  zoneInfo              String?
+  locale                String?
+  phone_number          String?
+  phone_number_verified Boolean   @default(false)
+  updated_at            DateTime  @updatedAt
+  createdAt             DateTime  @default(now())
+  address               Address?
+}
+
+model Address {
+  id             String   @id @default(cuid())
+  claimId        String   @unique
+  claims         Claims   @relation(fields: [claimId], references: [sub])
+  userId         String
+  street_address String
+  locality       String
+  region         String
+  postal_code    String
+  country        String
+  updated_at     DateTime @updatedAt
+  createdAt      DateTime @default(now())
 }

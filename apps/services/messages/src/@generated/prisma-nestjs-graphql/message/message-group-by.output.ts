@@ -11,13 +11,19 @@ export class MessageGroupBy {
     id!: string;
 
     @Field(() => String, {nullable:false})
+    threadId!: string;
+
+    @Field(() => String, {nullable:false})
     text!: string;
 
-    @Field(() => Boolean, {nullable:false})
-    read!: boolean;
+    @Field(() => String, {nullable:false})
+    fromId!: string;
 
     @Field(() => [String], {nullable:true})
-    userIds?: Array<string>;
+    participants?: Array<string>;
+
+    @Field(() => [String], {nullable:true})
+    participantReadIds?: Array<string>;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;

@@ -2,9 +2,11 @@ import { registerEnumType } from '@nestjs/graphql';
 
 export enum MessageScalarFieldEnum {
     id = "id",
+    threadId = "threadId",
     text = "text",
-    read = "read",
-    userIds = "userIds",
+    fromId = "fromId",
+    participants = "participants",
+    participantReadIds = "participantReadIds",
     createdAt = "createdAt"
 }
 

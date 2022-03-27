@@ -13,6 +13,7 @@ import {
 import { LoadingSpinner } from '@super-rad-poc/design/components';
 import MascotHello from './images/mascot/mascot_happy_1.png';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useSearchParams } from 'react-router-dom';
 
 const StyledWave = styled.div`
   width: 100vw;
@@ -140,8 +141,7 @@ const StyledMascot = styled.img`
 `;
 
 export const LandingPage = () => {
-  const { loginWithRedirect } = useAuth0();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <>
       <SnackManager />
@@ -165,10 +165,10 @@ export const LandingPage = () => {
         <StyledMascot src={MascotHello} alt="mascot" />
 
         <AccentLink
-          onClick={() => loginWithRedirect()}
+          to="/login"
           style={{ width: 'auto', padding: '1.5rem', marginTop: '2rem' }}
         >
-          <span>Click here to get started</span>
+          Click here to get started
         </AccentLink>
       </StyledPagecontainer>
     </>

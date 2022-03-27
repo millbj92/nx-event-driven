@@ -5,10 +5,10 @@ import {
   Title,
 } from '@super-rad-poc/design/styles';
 import * as React from 'react';
-import { Link } from 'wouter';
 import MascotSad from '../images/mascot/mascot_sad.png';
 import { themeGet } from '@styled-system/theme-get';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const StyledError = styled.div`
   display: flex;
@@ -54,7 +54,7 @@ export default function Error404() {
         <span>
           Please{' '}
           <StyledLink>
-            <Link href="/">Go Home</Link>{' '}
+            <Link to="/">Go Home</Link>{' '}
           </StyledLink>
           and try again.
         </span>

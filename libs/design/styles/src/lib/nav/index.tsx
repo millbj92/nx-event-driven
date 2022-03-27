@@ -1,5 +1,6 @@
 import { themeGet } from '@styled-system/theme-get';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 
 const leftToRightAnimation = keyframes`
@@ -81,6 +82,26 @@ export const NavMenu = styled.div<NavMenuProps>`
   padding: 1rem;
   padding-top: 0;
   z-index: 1;
+`;
+
+export const NavLink = styled(Link)`
+  font-size: 1rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  outline: none;
+  color: ${themeGet('colors.primary')};
+
+  &:hover,
+  &:active,
+  &:visited {
+    color: ${themeGet('colors.primary')};
+  }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const NavMenuItem = styled.div`

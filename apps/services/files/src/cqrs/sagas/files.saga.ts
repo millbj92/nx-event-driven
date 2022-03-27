@@ -13,7 +13,7 @@ export class FilesSaga {
       ofType(FileCreatedEvent),
       filter(event => event.file.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.fileEvent("FILE_CREATED", event.file, 1);
+        const newEvent = EventFactory.fileEvent("file.created", event.file, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );
@@ -25,7 +25,7 @@ export class FilesSaga {
       ofType(FileDeletedEvent),
       filter(event => event.file.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.fileEvent("FILE_DELETED", event.file, 1);
+        const newEvent = EventFactory.fileEvent("file.deleted", event.file, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );
@@ -37,7 +37,7 @@ export class FilesSaga {
       ofType(FileUpdatedEvent),
       filter(event => event.file.id !== undefined),
       map(event => {
-        const newEvent = EventFactory.fileEvent("FILE_UPDATED", event.file, 1);
+        const newEvent = EventFactory.fileEvent("file.updated", event.file, 1);
         return new SendKafkaCommand(newEvent);
       }),
     );

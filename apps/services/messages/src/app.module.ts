@@ -9,7 +9,7 @@ import {
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { PrismaService } from './prisma.service';
 import { MessageService } from './message.service';
-import { MessagesGateway } from './src/messages.gateway';
+import { MessagesGateway } from './messages.gateway';
 
 @Module({
   imports: [MessageModule],

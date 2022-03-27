@@ -21,7 +21,7 @@ export const FormTextArea = styled.textarea`
   }
 `;
 
-export const FormInput = styled.input`
+export const Input = styled.input`
   margin: 0.5rem;
   padding: 0.5rem;
   outline: none;

@@ -181,14 +181,14 @@ const baseConfig = async() => {
         },
         devServer: {
             hot: true,
-            server: {
-                type: 'https',
-                options: {
-                key: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4-key.pem')),
-                cert: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4.pem')),
-                ca: fs.readFileSync(path.resolve(__dirname, '../certs/rootCA.pem')),
-                }
-            },
+            // server: {
+            //     // type: 'https',
+            //     // options: {
+            //     // key: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4-key.pem')),
+            //     // cert: fs.readFileSync(path.resolve(__dirname, '../certs/sociium.io+4.pem')),
+            //     // ca: fs.readFileSync(path.resolve(__dirname, '../certs/rootCA.pem')),
+            //     // }
+            // },
             devMiddleware: {
                 writeToDisk: Boolean(writeToDisk)
             },

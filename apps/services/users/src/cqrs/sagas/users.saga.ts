@@ -12,7 +12,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserCreatedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user, 'USER_CREATED')),
+      map(event => new SendKafkaCommand(event.user, "user.created")),
     );
   }
 
@@ -21,7 +21,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserUpdatedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user,  'USER_UPDATED')),
+      map(event => new SendKafkaCommand(event.user,  "user.updated")),
       );
     }
 
@@ -30,7 +30,7 @@ export class UsersSaga {
       return events$.pipe(
         ofType(UserActivatedEvent),
         filter(event => event.user.id !== undefined),
-        map(event => new SendKafkaCommand(event.user, 'USER_ACTIVATED')),
+        map(event => new SendKafkaCommand(event.user, "user.deactivated"))
       );
     }
 
@@ -39,7 +39,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserActivatedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user,  'USER_ACTIVATED')),
+      map(event => new SendKafkaCommand(event.user,  "user.activated")),
     );
   }
 
@@ -48,7 +48,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserActivatedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user, 'USER_BANNED')),
+      map(event => new SendKafkaCommand(event.user, "user.banned")),
     );
   }
 
@@ -57,7 +57,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserUnBannedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user, 'USER_UNBANNED')),
+      map(event => new SendKafkaCommand(event.user, "user.unbanned")),
     );
   }
 
@@ -66,9 +66,7 @@ export class UsersSaga {
     return events$.pipe(
       ofType(UserVerifiedEvent),
       filter(event => event.user.id !== undefined),
-      map(event => new SendKafkaCommand(event.user, 'USER_VERIFIED')),
+      map(event => new SendKafkaCommand(event.user, 'user.verified')),
     );
   }
-
-
 }

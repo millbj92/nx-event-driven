@@ -7,6 +7,7 @@ import {
   color,
   compose,
 } from 'styled-system';
+import { Link as RouterLink } from 'react-router-dom';
 
 type TypogProps = TypographyProps & ColorProps;
 const typoVals = compose(typography, color);
@@ -51,14 +52,18 @@ export const Text = styled.p<TypogProps>`
   ${typoVals}
 `;
 
-export const Link = styled.a<TypogProps>`
-  font-size: ${(props) => props.theme.fontSizes[2]};
-  font-weight: ${themeGet('fontWeights.normal')};
-  line-height: ${themeGet('lineHeights.copy')};
-  letter-spacing: ${themeGet('letterSpacings.normal')};
-  color: ${themeGet('colors.primary_text')};
-  font-family: ${themeGet('fonts.primary')};
-  ${typoVals}
+export const Link = styled(RouterLink)<TypogProps>`
+  color: ${themeGet('colors.accent')};
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover,
+  &:active {
+    color: ${themeGet('colors.primary_light')};
+  }
+  &:focus {
+    color: ${themeGet('colors.primary')};
+  }
 `;
 
 export const Sub = styled.sub<TypogProps>`

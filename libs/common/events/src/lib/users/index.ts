@@ -63,7 +63,7 @@ export class UserCreatedEvent extends UserEvent {
 
 
 export class UserActivatedEvent extends UserEvent {
-  type: UserEventType = "USER_ACTIVATED";
+  type: UserEventType = "user.activated";
   constructor(public readonly user: UserAggregate) {
     super(user)
   }
@@ -91,7 +91,7 @@ export class UserBannedEvent extends UserEvent {
 }
 ;
 export class UserVerifiedEvent extends UserEvent {
-  type: UserEventType = "USER_VERIFIED";
+  type: UserEventType = "user.verified";
   constructor(public readonly user: UserAggregate) {
     super(user);
   }

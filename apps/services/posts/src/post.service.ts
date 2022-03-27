@@ -28,11 +28,10 @@ export class PostService {
   }
 
   async posts(
-    where: PostWhereInput,
-    info: GraphQLResolveInfo
+    where: PostWhereInput
   ): Promise<Post[] | null> {
-    const select = new PrismaSelect(info).value;
-    return await this.prismaService.post.findMany({where,...select});
+    
+    return await this.prismaService.post.findMany({where});
   };
 
   async post(data: PostWhereUniqueInput): Promise<Post | null> {

@@ -11,12 +11,15 @@ import { TagAggregateArgs } from './@generated/prisma-nestjs-graphql/tag/tag-agg
 import { User } from './users_connection/user.model';
 import { Post } from './post_connection/post.model';
 import { Comment } from './comment_connection/comment.model';
+import { UseGuards } from '@nestjs/common';
+import { AuthorizationGuard } from '@super-rad-poc/services/shared';
 
 @Resolver(() => Tag)
 export class TagResolver {
   constructor(private readonly tagService: TagService) {}
 
   @Mutation(() => Tag)
+  @UseGuards(AuthorizationGuard)
   async createTag(
     @Args('createTagInput') createTagInput: TagCreateInput
   ) {
@@ -41,6 +44,7 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag, { name: 'updateTag', nullable: true })
+  @UseGuards(AuthorizationGuard)
   updateTag(
     @Args('tagUpdateInput') tagUpdateInput: TagUpdateInput
   ) {
@@ -48,6 +52,7 @@ export class TagResolver {
   }
 
   @Mutation(() => Tag, { name: 'removeTag', nullable: true })
+  @UseGuards(AuthorizationGuard)
   removeTag(where: TagWhereUniqueInput) {
     return this.tagService.remove(where);
   }

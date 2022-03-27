@@ -1,8 +1,8 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFieldUpdateOperationsInput } from '../prisma/string-field-update-operations.input';
-import { BoolFieldUpdateOperationsInput } from '../prisma/bool-field-update-operations.input';
-import { MessageUpdateuserIdsInput } from '../prisma/message-updateuser-ids.input';
+import { MessageUpdateparticipantsInput } from '../prisma/message-updateparticipants.input';
+import { MessageUpdateparticipantReadIdsInput } from '../prisma/message-updateparticipant-read-ids.input';
 import { DateTimeFieldUpdateOperationsInput } from '../prisma/date-time-field-update-operations.input';
 
 @InputType()
@@ -12,13 +12,19 @@ export class MessageUncheckedUpdateManyInput {
     id?: StringFieldUpdateOperationsInput;
 
     @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    threadId?: StringFieldUpdateOperationsInput;
+
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
     text?: StringFieldUpdateOperationsInput;
 
-    @Field(() => BoolFieldUpdateOperationsInput, {nullable:true})
-    read?: BoolFieldUpdateOperationsInput;
+    @Field(() => StringFieldUpdateOperationsInput, {nullable:true})
+    fromId?: StringFieldUpdateOperationsInput;
 
-    @Field(() => MessageUpdateuserIdsInput, {nullable:true})
-    userIds?: MessageUpdateuserIdsInput;
+    @Field(() => MessageUpdateparticipantsInput, {nullable:true})
+    participants?: MessageUpdateparticipantsInput;
+
+    @Field(() => MessageUpdateparticipantReadIdsInput, {nullable:true})
+    participantReadIds?: MessageUpdateparticipantReadIdsInput;
 
     @Field(() => DateTimeFieldUpdateOperationsInput, {nullable:true})
     createdAt?: DateTimeFieldUpdateOperationsInput;

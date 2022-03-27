@@ -1,7 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { StringFilter } from '../prisma/string-filter.input';
-import { BoolFilter } from '../prisma/bool-filter.input';
+import { ThreadRelationFilter } from '../thread/thread-relation-filter.input';
 import { StringNullableListFilter } from '../prisma/string-nullable-list-filter.input';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
@@ -21,13 +21,22 @@ export class MessageWhereInput {
     id?: StringFilter;
 
     @Field(() => StringFilter, {nullable:true})
+    threadId?: StringFilter;
+
+    @Field(() => ThreadRelationFilter, {nullable:true})
+    thread?: ThreadRelationFilter;
+
+    @Field(() => StringFilter, {nullable:true})
     text?: StringFilter;
 
-    @Field(() => BoolFilter, {nullable:true})
-    read?: BoolFilter;
+    @Field(() => StringFilter, {nullable:true})
+    fromId?: StringFilter;
 
     @Field(() => StringNullableListFilter, {nullable:true})
-    userIds?: StringNullableListFilter;
+    participants?: StringNullableListFilter;
+
+    @Field(() => StringNullableListFilter, {nullable:true})
+    participantReadIds?: StringNullableListFilter;
 
     @Field(() => DateTimeFilter, {nullable:true})
     createdAt?: DateTimeFilter;
