@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { AppService } from "./app.service";
-import { getLogger } from "@super-rad-poc/common/models";
+import { getLogger } from "@super-rad-poc/services/shared";
 
 @Injectable()
 export class TasksService {

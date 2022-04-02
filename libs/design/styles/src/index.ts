@@ -9,4 +9,6 @@ export * from './lib/containers';
 export * from './lib/typography';
 export * from './lib/indicators';
 export * from './lib/containers/on-hover-scroll-container';
+export * from './lib/messaging';
 export * from './lib/images/index';
+export * from './lib/animations';

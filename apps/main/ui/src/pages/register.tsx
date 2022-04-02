@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Config } from '../config';
 import MascotFace from '../images/mascot/mascot_face.png';
 import * as joi from 'joi';
-import { getLogger } from '@super-rad-poc/common/models';
 
 import {
   Card,
@@ -188,10 +187,8 @@ export const Register = () => {
       const json = await response.json();
       if (json.error) {
         setError(json.error);
-        console.log(json);
       } else {
         setError('');
-        console.log(json);
         navigate('/confirm');
       }
     } catch (e) {

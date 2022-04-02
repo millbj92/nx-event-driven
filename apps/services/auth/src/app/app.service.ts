@@ -3,7 +3,7 @@ import { JWK, JWS } from 'node-jose';
 import * as fs from 'fs';
 import { join } from 'path';
 import { verify } from 'jsonwebtoken';
-import { User } from '@prisma/client/users';
+import { User, Tenant } from '@prisma/client/users';
 import { PrismaService } from './prisma.service';
 import * as crypt from 'bcrypt';
 import { DateTime } from 'luxon';
@@ -11,9 +11,10 @@ import { v4 } from 'uuid';
 import { SendKafkaCommand } from '@super-rad-poc/common/events';
 import { ClientKafka, EventPattern } from '@nestjs/microservices';
 import { tap } from 'rxjs';
-import { getLogger } from '@super-rad-poc/common/models';
+import { getLogger } from '@super-rad-poc/services/shared';
 import * as jwkToPem from 'jwk-to-pem';
 import * as jwt from 'jsonwebtoken';
+import { ITenant, TenantForSignUp } from './models';
 
 
 @Injectable()
@@ -42,7 +43,7 @@ export class AppService {
       this.keyStore = await JWK.asKeyStore(ks.toString());
     }
 
-    const diff = this.keyStore.all({use: 'sig'}).length  - 2; 
+    const diff = this.keyStore.all({use: 'sig'}).length  - 2;
     for(let i = 0; i < Math.abs(diff); i++) {
       await this.addKey()
     }
@@ -54,38 +55,46 @@ export class AppService {
   async getUser(email: string) {
     return await this.prismaService.user.findUnique({
       where: {
-        email
-      }
+        email,
+      },
+      select: {
+        id: true,
+        email: true,
+        password: true,
+        firstName: true,
+        lastName: true,
+        picture: true,
+      },
     });
   }
 
   //#endregion
 
-  
+
 
   //#region auth
-  async signToken(user: User) {
+  async signToken(user: Partial<User>) {
     const key = this.keyStore.all({ use: 'sig' })[0];
     const opt = {compact: true, jwk: key, fields: { typ: 'jwt' } };
+    const { password, ...rest } = user;
     const payload = JSON.stringify({
       exp: Math.floor(DateTime.now().plus({days: 1}).toUnixInteger()),
       iat: Math.floor(DateTime.now().toUnixInteger()),
-      sub:{
-        id: user.id,
-      } ,
+      sub: user.id,
       iss: 'https://sociium.io',
       aud: 'https://sociium.io',
       data: {
-        profile: {
-          email: user.email,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          id: user.id,
-        }
+       name: `${user.firstName} ${user.lastName}`,
+       picture: user.picture,
+       given_name: user.firstName,
+       family_name: user.lastName,
+       email: user.email,
+       locale: 'en-US',
       },
       scope: 'openid profile email',
       kid: key.kid,
     });
+
 
     const token = await JWS.createSign(opt, key)
     .update(payload)
@@ -118,24 +127,26 @@ export class AppService {
     const idToken = JSON.stringify({
       exp: Math.floor(DateTime.now().plus({days: 5}).toUnixInteger()),
       iat: Math.floor(DateTime.now().toUnixInteger()),
-      sub: user.email,
+      sub: user.email.toLocaleLowerCase(),
       iss: 'http://localhost:5002',
       aud: process.env.JWT_AUDIENCE,
       scope: 'openid profile email'
     });
 
+    const { email, ...rest} = user;
+    const lowerCaseEmail = email.toLowerCase();
 
     const verification = await JWS.createSign(opt, key)
     .update(idToken)
     .final() as unknown as string;
-  
+
     const newUser = {
       ...user,
+      email: lowerCaseEmail,
       password,
       verification,
       createdAt: DateTime.local().toISO(),
       updatedAt: DateTime.local().toISO()
-
     }
     const userCreated = await this.prismaService.user.create({
       data: newUser
@@ -144,6 +155,39 @@ export class AppService {
   }
   //#endregion
 
+
+  //#region Tenant
+  async tenantRegister(tenant: TenantForSignUp) {
+    const tenantCreated = await this.prismaService.tenant.create({
+      data: {
+        ...tenant,
+      }
+    });
+    return tenantCreated;
+  }
+
+
+  async findTenantById(id: string) {
+    return await this.prismaService.tenant.findUnique({
+      where: {
+        id,
+      }
+    });
+  }
+
+
+  async verifyTenantSecret(tenant: ITenant) {
+    const found = await this.prismaService.tenant.findUnique({
+      where: {
+        id: tenant.id,
+      },
+      select: {
+        clientSecret: true,
+      }
+    });
+    return found.clientSecret  === tenant.clientSecret;
+  }
+  //#endregion
 
   //#region Key management
 
@@ -185,7 +229,7 @@ export class AppService {
     return this.keyStore.toJSON();
   }
 
-  
+
   private async tryGenKeys() {
     const ks = fs.readFileSync(join(__dirname, 'public', '.well-known', 'jwks.json'));
      this.keyStore = await JWK.asKeyStore(ks.toString());
@@ -248,7 +292,7 @@ export class AppService {
       }
     });
     if(!user) throw new NotFoundException('User Not Found');
-    
+
     const key = this.keyStore.all({ use: 'sig' })[0];
     const opt = { compact: true, jwk: key, fields: { typ: 'jwt' } };
     const idToken = JSON.stringify({

@@ -31,6 +31,42 @@ export class UserGroupBy {
     @Field(() => Boolean, {nullable:false})
     isBanned!: boolean;
 
+    @Field(() => String, {nullable:true})
+    middle_name?: string;
+
+    @Field(() => String, {nullable:true})
+    nickname?: string;
+
+    @Field(() => String, {nullable:true})
+    preferred_username?: string;
+
+    @Field(() => String, {nullable:true})
+    profile?: string;
+
+    @Field(() => String, {nullable:false})
+    picture!: string;
+
+    @Field(() => String, {nullable:true})
+    website?: string;
+
+    @Field(() => String, {nullable:true})
+    gender?: string;
+
+    @Field(() => Date, {nullable:true})
+    birthdate?: Date | string;
+
+    @Field(() => String, {nullable:true})
+    zoneInfo?: string;
+
+    @Field(() => String, {nullable:true})
+    locale?: string;
+
+    @Field(() => String, {nullable:true})
+    phone_number?: string;
+
+    @Field(() => Boolean, {nullable:false})
+    phone_number_verified!: boolean;
+
     @Field(() => String, {nullable:false})
     firstName!: string;
 
@@ -39,6 +75,9 @@ export class UserGroupBy {
 
     @Field(() => Int, {nullable:false})
     banDuration!: number;
+
+    @Field(() => [String], {nullable:true})
+    friendRequestIds?: Array<string>;
 
     @Field(() => Date, {nullable:false})
     createdAt!: Date | string;

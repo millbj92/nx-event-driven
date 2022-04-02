@@ -3,3 +3,4 @@ export * from './lib/loading-component';
 export * from './lib/notification-provider';
 export * from './lib/auth-provider';
 export * from './lib/protected-route';
+export * from './lib/socket-provider';

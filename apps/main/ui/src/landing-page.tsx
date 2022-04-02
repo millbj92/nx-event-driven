@@ -12,7 +12,6 @@ import {
 } from '@super-rad-poc/design/styles';
 import { LoadingSpinner } from '@super-rad-poc/design/components';
 import MascotHello from './images/mascot/mascot_happy_1.png';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useSearchParams } from 'react-router-dom';
 
 const StyledWave = styled.div`

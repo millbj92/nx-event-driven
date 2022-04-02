@@ -11,6 +11,7 @@ import {
   AuthProvider,
   LoadingSpinner,
   ProtectedRoute,
+  SocketIOProvider,
   useAuth,
 } from '@super-rad-poc/design/components';
 import Error404 from './pages/error-404';
@@ -20,7 +21,6 @@ import { MicroApp } from './remote-utils';
 import { Theme } from './theme';
 import { Route, Routes } from 'react-router-dom';
 import { Config } from './config';
-import { useAuth0 } from '@auth0/auth0-react';
 import { setContext } from '@apollo/link-context';
 import { VerificationPage } from './pages/verify';
 import { Login } from './pages/login';
@@ -71,7 +71,6 @@ export const App = () => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/verify" element={<VerificationPage />} />
                 <Route path="/confirm" element={<Confirm />} />
-
                 <Route
                   path="/home"
                   element={
@@ -81,7 +80,6 @@ export const App = () => {
                     />
                   }
                 />
-
                 <Route
                   path="/profile"
                   element={
@@ -93,12 +91,9 @@ export const App = () => {
                     />
                   }
                 />
-
                 <Route path="*" element={<Error404 />} />
               </Routes>
-              <Suspense fallback={null}>
-                <MicroApp remoteName="messages" moduleName="Messages" />
-              </Suspense>
+              <MicroApp remoteName="messages" moduleName="Messages" />
             </Content>
           </Suspense>
         </AuthorizedApolloProvider>

@@ -13,7 +13,7 @@ import { AggregateRoot, CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateCommentCommand, DeleteCommentCommand } from './cqrs/commands/interface';
 import { AllCommentsQuery, OneCommentQuery, CommentAggregateQuery } from './cqrs/queries/interface/index';
 import { UpdateCommentCommand } from './cqrs/commands/interface/index';
-import { getLogger } from '@super-rad-poc/common/models';
+import { getLogger } from '@super-rad-poc/services/shared';
 import { UseGuards } from '@nestjs/common';
 import { AuthorizationGuard } from '@super-rad-poc/services/shared';
 

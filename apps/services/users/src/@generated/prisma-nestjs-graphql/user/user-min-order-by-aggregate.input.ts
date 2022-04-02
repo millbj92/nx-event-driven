@@ -27,6 +27,42 @@ export class UserMinOrderByAggregateInput {
     isBanned?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})
+    middle_name?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    nickname?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    preferred_username?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    profile?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    picture?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    website?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    gender?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    birthdate?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    zoneInfo?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    locale?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    phone_number?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
+    phone_number_verified?: keyof typeof SortOrder;
+
+    @Field(() => SortOrder, {nullable:true})
     firstName?: keyof typeof SortOrder;
 
     @Field(() => SortOrder, {nullable:true})

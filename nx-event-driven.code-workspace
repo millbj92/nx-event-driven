@@ -12,6 +12,8 @@
       "typescript",
       "typescriptreact",
       "javascriptreact"
-    ]
+    ],
+    "azureVirtualMachines.enableOutputTimestamps": false,
+    "azureVirtualMachines.promptForPassphrase": false
   }
 }

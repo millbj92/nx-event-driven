@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Get, NotFoundException, Post, UsePipes } from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { UserForLogin, UserForRegister, VerificationToken } from './models';
+import { ITenant, IUserForLogin, TenantForSignUp, TokenRequest, UserForLogin, UserForRegister, VerificationToken } from './models';
 import * as crypt from 'bcrypt';
 import { UserValidationPipe } from './pipes/user-validation.pipe';
 import { CreateUserSchema } from './pipes/create-user.schema';
@@ -27,18 +27,15 @@ export class AppController {
   }
 
   @Post('/authorize')
-  async authorize(@Body() {email, password}: UserForLogin) {
-    const user = await this.appService.getUser(email);
+  async authorize(@Body() {email, password}: IUserForLogin) {
+    console.log(email, password);
+    const user = await this.appService.getUser(email.toLowerCase());
     if(!user) return new NotFoundException('User not found');
 
     const match = await crypt.compare(password, user.password);
     if(!match) return new BadRequestException('Invalid password');
 
-    return await await this.appService.signToken(user);
-    
-    //this.commandBus.execute(new LoginUserCommand(user));
-    
-    //
+    return await this.appService.signToken(user);
   }
 
   @Get('/add')
@@ -54,11 +51,9 @@ export class AppController {
   @Post('/register')
   @UsePipes(new UserValidationPipe(CreateUserSchema))
   async register(@Body() user: User) {
-    const exists = await this.appService.getUser(user.email);
+    const exists = await this.appService.getUser(user.email.toLowerCase());
     if(exists) return new BadRequestException('User already exists');
     return await this.commandBus.execute(new RegisterUserCommand(user));
-    
-    //await this.appService.register(user);
   }
 
   @Post('/verify')
@@ -75,5 +70,28 @@ export class AppController {
   @Get("/rotate")
   async rotate() {
     return await this.appService.refreshAllKeys();
+  }
+
+
+  @Post('/registertenant')
+  async tenantregister(@Body() tenant: TenantForSignUp) {
+    return await this.appService.tenantRegister(tenant);
+  }
+
+
+  @Post('/requesttoken')
+  async requestToken(@Body() request: TokenRequest) {
+    console.log(request);
+    const tenant = await this.appService.findTenantById(request.client_id);
+    if(!tenant) return new NotFoundException('Tenant not found');
+
+    const secretVerified = await this.appService.verifyTenantSecret(tenant);
+    if(!secretVerified) return new BadRequestException('Invalid secret');
+    const token = await this.authorize({
+      email: request.username.toLowerCase(),
+      password: request.password
+    });
+    console.log(token);
+    return token;
   }
 }

@@ -5,7 +5,7 @@
 
 
 import { NestFactory } from '@nestjs/core';
-import { getLogger } from '@super-rad-poc/common/models';
+import { getLogger } from '@super-rad-poc/services/shared';
 
 import { AppModule } from './app.module';
 

@@ -7,7 +7,7 @@ export type IUserForLogin = UserForSignin;
 export class UserForLogin extends AggregateRoot implements IUserForLogin  {
     constructor(
         public readonly id: string,
-        public readonly email: string,
+        public readonly email: Lowercase<string>,
         public readonly password: string
     ) {
         super();
@@ -20,7 +20,7 @@ export class UserForLogin extends AggregateRoot implements IUserForLogin  {
 
 export class ResendVerificationUser extends AggregateRoot {
     constructor(
-        public readonly email: string,
+        public readonly email: Lowercase<string>,
         public readonly token: string
     ) {
         super();
@@ -39,7 +39,7 @@ export type IUserForRegister = UserForRegistration
 
 export class UserForRegister extends AggregateRoot implements IUserForRegister  {
     constructor(
-        public readonly email: string,
+        public readonly email: Lowercase<string>,
         public readonly password: string,
         public readonly firstName: string,
         public readonly lastName: string,
@@ -101,3 +101,25 @@ export interface VerificationToken {
     token: string;
 }
 
+export type GrantType =  "Implicit" | "AuthorizationCode" | "Hybrid" | "ClientCredentials" | "ResourceOwnerPassword" | "DeviceFlow" | "RefreshToken" | "Extension";
+
+export interface TokenRequest {
+  grant_type: GrantType;
+  client_id: string;
+  client_secret: string;
+  username: string;
+  password: string;
+  scope: string;
+}
+
+
+export interface ITenant {
+    id: string;
+    clientSecret: string;
+    name: string;
+    description?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export type TenantForSignUp = Partial<ITenant> & Pick<ITenant, "name">;

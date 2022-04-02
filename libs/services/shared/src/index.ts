@@ -7,6 +7,7 @@ export * from './lib/decorators';
 export * from './lib/providers';
 export * from './lib/strategies';
 export * from './lib/authorization';
+export * from './lib/loggers';
 
 export {
   customValidators

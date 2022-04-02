@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import MascotFace from '../images/mascot/mascot_face.png';
 import MascotHappy from '../images/mascot/mascot_hello.png';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import { plainToClass } from 'class-transformer';
 import {
   Card,
   CardHeader,
@@ -22,6 +24,47 @@ import { useAuth } from '@super-rad-poc/design/components';
 import { useSearchParams } from 'react-router-dom';
 import { useStore } from '@super-rad-poc/common/hooks';
 
+import { User as IUser } from '@prisma/client/users';
+export class User implements IUser {
+  constructor(
+    public id: string,
+    public email: string,
+    public password: string,
+    public firstName: string,
+    public lastName: string,
+    public verification: string,
+    public friendRequestIds: string[],
+    public createdAt: Date,
+    public updatedAt: Date,
+    public isActive: boolean,
+    public isBanned: boolean,
+    public verified: boolean,
+    public banDuration: number,
+    public middle_name: string,
+    public nickname: string,
+    public preferred_username: string,
+    public profile: string,
+    public picture: string,
+    public website: string,
+    public birthdate: Date,
+    public gender: string,
+    public zoneInfo: string,
+    public locale: string,
+    public phone_number: string,
+    public phone_number_verified: boolean
+  ) {}
+}
+interface JwtPayload {
+  aud: string;
+  data: Partial<User>;
+  exp: number;
+  iat: number;
+  iss: string;
+  kid: string;
+  scope: string;
+  sub: string;
+}
+
 const StyledAuth = styled.div`
   padding: 4rem;
   display: flex;
@@ -40,7 +83,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { onLogin } = useAuth();
   const [authenticated, setAuthenticated] = useState(false);
-  const { setToken } = useStore();
+  const { setToken, setUser } = useStore();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,6 +102,9 @@ export const Login = () => {
           setLoading(false);
           setAuthenticated(true);
           setToken(jwt);
+
+          const decoded = jwt_decode(jwt) as JwtPayload;
+          setUser(plainToClass(User, decoded.data));
           console.log(jwt);
 
           setTimeout(() => {

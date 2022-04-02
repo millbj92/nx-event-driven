@@ -6,7 +6,7 @@
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { getLogger } from '@super-rad-poc/common/models';
+import { getLogger } from '@super-rad-poc/services/shared';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
 
 const microserviceConfig: KafkaOptions = {

@@ -5,15 +5,17 @@
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { getLogger } from '@super-rad-poc/common/models';
+import { getLogger } from '@super-rad-poc/services/shared';
 import { KafkaOptions, Transport } from '@nestjs/microservices';
 
 const microserviceConfig: KafkaOptions = {
   transport: Transport.KAFKA,
-
   options: {
     client: {
-      brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],
+      brokers: [
+        `${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`
+
+      ],
     }
   }
 }
@@ -21,6 +23,8 @@ const microserviceConfig: KafkaOptions = {
 
 async function bootstrap() {
   const logger = getLogger();
+  logger.info(process.env.KAFKA_BROKER_HOST);
+  logger.info(process.env.KAFKA_BROKER_PORT);
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice(microserviceConfig);
   app.enableCors({

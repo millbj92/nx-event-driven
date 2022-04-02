@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleLogout = (callback: () => void) => {
-    setToken('');
+    setToken(undefined);
     setIsAuthenticated(false);
     //Call endpoit to logout.
     callback();

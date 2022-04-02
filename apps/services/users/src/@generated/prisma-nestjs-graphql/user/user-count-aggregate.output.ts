@@ -27,6 +27,42 @@ export class UserCountAggregate {
     isBanned!: number;
 
     @Field(() => Int, {nullable:false})
+    middle_name!: number;
+
+    @Field(() => Int, {nullable:false})
+    nickname!: number;
+
+    @Field(() => Int, {nullable:false})
+    preferred_username!: number;
+
+    @Field(() => Int, {nullable:false})
+    profile!: number;
+
+    @Field(() => Int, {nullable:false})
+    picture!: number;
+
+    @Field(() => Int, {nullable:false})
+    website!: number;
+
+    @Field(() => Int, {nullable:false})
+    gender!: number;
+
+    @Field(() => Int, {nullable:false})
+    birthdate!: number;
+
+    @Field(() => Int, {nullable:false})
+    zoneInfo!: number;
+
+    @Field(() => Int, {nullable:false})
+    locale!: number;
+
+    @Field(() => Int, {nullable:false})
+    phone_number!: number;
+
+    @Field(() => Int, {nullable:false})
+    phone_number_verified!: number;
+
+    @Field(() => Int, {nullable:false})
     firstName!: number;
 
     @Field(() => Int, {nullable:false})
@@ -34,6 +70,9 @@ export class UserCountAggregate {
 
     @Field(() => Int, {nullable:false})
     banDuration!: number;
+
+    @Field(() => Int, {nullable:false})
+    friendRequestIds!: number;
 
     @Field(() => Int, {nullable:false})
     createdAt!: number;

@@ -22,44 +22,57 @@ model User {
   verification String   @unique
   isActive     Boolean  @default(true)
   isBanned     Boolean  @default(false)
-  firstName    String
-  lastName     String
-  banDuration  Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now())
-  claims       Claims?
-}
-
-model Claims {
-  sub                   String    @id @default(cuid())
-  userId                String    @unique
-  user                  User      @relation(fields: [userId], references: [id])
-  name                  String?
-  given_name            String?
-  family_name           String?
   middle_name           String?
   nickname              String?
   preferred_username    String?
   profile               String?
-  picture               String?
+  picture               String   @default("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y")
   website               String?
-  email                 String?
-  email_verified        String?
   gender                String?
   birthdate             DateTime?
   zoneInfo              String?
   locale                String?
   phone_number          String?
   phone_number_verified Boolean   @default(false)
-  updated_at            DateTime  @updatedAt
-  createdAt             DateTime  @default(now())
-  address               Address?
+  firstName    String
+  lastName     String
+  banDuration  Int      @default(0)
+  friendRequestIds  String[]
+  friendRequests    FriendRequest[]
+  friendRequestsSent FriendRequest[] @relation("FRIEND_REQUESTS_SENT")
+  userFriends       Friends[] @relation(name: "users")
+  friendUserFriends Friends[] @relation(name: "friend_users")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+}
+
+model Friends {
+  id           String      @id @default(cuid())
+  userId       String
+  friendUserId String
+  Users        User   @relation(name: "users", fields: [userId], references: [id])
+  FriendUsers  User   @relation(name: "friend_users", fields: [friendUserId], references: [id])
+  status       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, friendUserId])
+}
+
+
+model FriendRequest {
+  id           String   @id @default(cuid())
+  receiverId   String
+  receiver     User     @relation(fields: [receiverId], references: [id])
+  senderId     String   @unique
+  sender       User     @relation(name: "FRIEND_REQUESTS_SENT",fields: [senderId], references: [id])
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
 }
 
 model Address {
   id             String   @id @default(cuid())
-  claimId        String   @unique
-  claims         Claims   @relation(fields: [claimId], references: [sub])
   userId         String
   street_address String
   locality       String
@@ -68,4 +81,15 @@ model Address {
   country        String
   updated_at     DateTime @updatedAt
   createdAt      DateTime @default(now())
+}
+
+
+
+model Tenant {
+  id           String   @id @default(cuid())
+  clientSecret String   @default(cuid())
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

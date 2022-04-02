@@ -5,8 +5,19 @@ export enum UserOrderByRelevanceFieldEnum {
     email = "email",
     password = "password",
     verification = "verification",
+    middle_name = "middle_name",
+    nickname = "nickname",
+    preferred_username = "preferred_username",
+    profile = "profile",
+    picture = "picture",
+    website = "website",
+    gender = "gender",
+    zoneInfo = "zoneInfo",
+    locale = "locale",
+    phone_number = "phone_number",
     firstName = "firstName",
-    lastName = "lastName"
+    lastName = "lastName",
+    friendRequestIds = "friendRequestIds"
 }
 
 
