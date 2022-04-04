@@ -8,12 +8,16 @@ import { CreateUserSchema } from './pipes/create-user.schema';
 import { User } from '@prisma/client/users';
 import { CommandBus } from '@nestjs/cqrs';
 import { LoginUserCommand, RegisterUserCommand, ResendVerificationCommand } from './cqrs/commands';
+import { HealthCheckService, HttpHealthIndicator, HealthCheck } from '@nestjs/terminus';
+
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly commandBus: CommandBus,
+    private readonly health: HealthCheckService,
+    private readonly http: HttpHealthIndicator
     ) {}
 
   @Get('/.well-known/jwks')
@@ -93,5 +97,14 @@ export class AppController {
     });
     console.log(token);
     return token;
+  }
+
+
+  @Get('health')
+  @HealthCheck()
+  healthCheck() {
+    return this.health.check([
+    () => this.http.pingCheck('google', 'https://google.com')
+    ])
   }
 }

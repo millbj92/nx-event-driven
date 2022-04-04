@@ -4,26 +4,33 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nrwl/node:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/services/shared",
         "tsConfig": "libs/services/shared/tsconfig.lib.json",
-        "packageJson": "libs/services/shared/package.json",
-        "main": "libs/services/shared/src/index.ts",
-        "assets": ["libs/services/shared/*.md"]
+        "packageJson": "libs/services/shared",
+        "main": "libs/services/shared/src/index.ts"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/services/shared/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/services/shared/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/services/shared"],
+      "outputs": [
+        "coverage/libs/services/shared"
+      ],
       "options": {
         "jestConfig": "libs/services/shared/jest.config.js",
         "passWithNoTests": true

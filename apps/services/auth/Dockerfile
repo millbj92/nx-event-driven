@@ -1,11 +1,18 @@
-FROM sociium/base:latest as builder
+FROM ghcr.io/millbj92/sociium_base:latest AS builder
 
 ARG NODE_ENV
 ARG BUILD_FLAG
 WORKDIR /app/builder
 COPY . .
-RUN npx nx build services-auth ${BUILD_FLAG} --target=production --env={NODE_ENV}
+
+RUN npx nx run services-auth:build:production
+
+FROM ghcr.io/millbj92/sociium_base:latest
 
 WORKDIR /usr/src/app
+COPY --from=builder /app/builder ./
+ENV NODE_ENV=$NODE_ENV
+EXPOSE 5002
+CMD ["node", "./dist/apps/services/auth/main.js"]
 
-COPY --from=latest /app/builder/dist/apps/services/auth/dist/ .
+LABEL org.opencontainers.image.authors="brandon@brandonmiller.io"

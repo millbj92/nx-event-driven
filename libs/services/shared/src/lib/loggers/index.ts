@@ -63,13 +63,15 @@ const devLogger = (label?: string) => createLogger({
 });
 
 const prodLogger = (label?: string) => createLogger({
-  transports: [new transports.Console()],
-  format: colorFormat(label),
-  levels: {
-    'error': 0,
-    'warn': 1,
-    'http': 3,
-  },
+  transports: [
+    new transports.Console(),
+    new transports.Console({
+      level: "info",
+      format: format.printf(info => undefined)
+    })
+  ],
+  format: colorFormat(label)
+
 });
 
 export function getLogger(label?: string): Logger {

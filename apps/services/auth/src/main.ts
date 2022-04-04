@@ -13,7 +13,7 @@ const microserviceConfig: KafkaOptions = {
   options: {
     client: {
       brokers: [
-        `${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`
+        `${process.env.AUTH_KAFKA_BROKER_HOST}:${process.env.AUTH_KAFKA_BROKER_PORT}`
 
       ],
     }
@@ -23,14 +23,14 @@ const microserviceConfig: KafkaOptions = {
 
 async function bootstrap() {
   const logger = getLogger();
-  logger.info(process.env.KAFKA_BROKER_HOST);
-  logger.info(process.env.KAFKA_BROKER_PORT);
+  logger.info(process.env.AUTH_KAFKA_BROKER_HOST);
+  logger.info(process.env.AUTH_KAFKA_BROKER_PORT);
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice(microserviceConfig);
   app.enableCors({
     origin: 'http://localhost:3002'
   })
-  const port = process.env.PORT || 5002;
+  const port = process.env.AUTH_PORT || 5002;
   app.startAllMicroservices();
   await app.listen(port);
   logger.info(

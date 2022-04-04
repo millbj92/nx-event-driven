@@ -14,6 +14,7 @@
       "javascriptreact"
     ],
     "azureVirtualMachines.enableOutputTimestamps": false,
-    "azureVirtualMachines.promptForPassphrase": false
+    "azureVirtualMachines.promptForPassphrase": false,
+    "terminal.explorerKind": "integrated"
   }
 }

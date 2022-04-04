@@ -2,6 +2,7 @@ generator client {
   provider        = "prisma-client-js"
   output          = "../../../../node_modules/@prisma/client/users"
   previewFeatures = ["filterJson", "fullTextSearch"]
+  binaryTargets   = ["native"]
 }
 
 generator nestgraphql {
@@ -11,7 +12,7 @@ generator nestgraphql {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("USERS_DATABASE_URL")
 }
 
 model User {

@@ -13,15 +13,15 @@ import { CommandHandlers, QueryHandlers, EventHandlers, UsersSaga } from './cqrs
     CqrsModule,
     ClientsModule.register([
       {
-        name: process.env.KAFKA_SERVICE_NAME,
+        name: process.env.USERS_KAFKA_SERVICE_NAME,
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: process.env.KAFKA_CLIENT_ID,
-            brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],
+            clientId: process.env.USERS_KAFKA_CLIENT_ID,
+            brokers: [`${process.env.USERS_KAFKA_BROKER_HOST}:${process.env.USERS_KAFKA_BROKER_PORT}`],
           },
           consumer: {
-            groupId: process.env.KAFKA_CONSUMER_GROUP_ID,
+            groupId: process.env.USERS_KAFKA_CONSUMER_GROUP_ID,
           }
         },
       },

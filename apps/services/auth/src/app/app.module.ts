@@ -8,23 +8,26 @@ import { PrismaService } from './prisma.service';
 import { CommandHandlers, EventHandlers, AuthSaga} from './cqrs';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TasksService } from './tasks.service';
-
+import { TerminusModule } from '@nestjs/terminus';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [
-    ScheduleModule.forRoot(),
+    HttpModule,
+    TerminusModule,
     CqrsModule,
+    ScheduleModule.forRoot(),
     ClientsModule.register([
       {
-        name: process.env.KAFKA_SERVICE_NAME,
-        transport: Transport?.KAFKA,
+        name: process.env.AUTH_KAFKA_SERVICE_NAME,
+        transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: process.env.KAFKA_CLIENT_ID,
-            brokers: [`${process.env.KAFKA_BROKER_HOST}:${process.env.KAFKA_BROKER_PORT}`],
+            clientId: process.env.AUTH_KAFKA_CLIENT_ID,
+            brokers: [`${process.env.AUTH_KAFKA_BROKER_HOST}:${process.env.AUTH_KAFKA_BROKER_PORT}`],
           },
           consumer: {
-            groupId: process.env.KAFKA_CONSUMER_GROUP_ID,
+            groupId: process.env.AUTH_KAFKA_CONSUMER_GROUP_ID,
           }
         },
       },

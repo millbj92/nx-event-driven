@@ -1,4 +1,4 @@
-import { BadRequestException, Get, Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Get, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { JWK, JWS } from 'node-jose';
 import * as fs from 'fs';
 import { join } from 'path';
@@ -7,12 +7,9 @@ import { User, Tenant } from '@prisma/client/users';
 import { PrismaService } from './prisma.service';
 import * as crypt from 'bcrypt';
 import { DateTime } from 'luxon';
-import { v4 } from 'uuid';
 import { SendKafkaCommand } from '@super-rad-poc/common/events';
-import { ClientKafka, EventPattern } from '@nestjs/microservices';
-import { tap } from 'rxjs';
+import { ClientKafka } from '@nestjs/microservices';
 import { getLogger } from '@super-rad-poc/services/shared';
-import * as jwkToPem from 'jwk-to-pem';
 import * as jwt from 'jsonwebtoken';
 import { ITenant, TenantForSignUp } from './models';
 
@@ -25,7 +22,7 @@ export class AppService {
   private readonly certDir = join(__dirname, 'public', 'certs');
   constructor(
     private readonly prismaService: PrismaService,
-    @Inject(process.env.KAFKA_SERVICE_NAME) private readonly client: ClientKafka
+    @Inject(process.env.AUTH_KAFKA_SERVICE_NAME) private readonly client: ClientKafka
   ) {
     this.Init();
   }
