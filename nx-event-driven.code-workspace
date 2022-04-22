@@ -15,6 +15,11 @@
     ],
     "azureVirtualMachines.enableOutputTimestamps": false,
     "azureVirtualMachines.promptForPassphrase": false,
-    "terminal.explorerKind": "integrated"
+    "terminal.explorerKind": "integrated",
+    "yaml.format.bracketSpacing": false,
+    "azureML.yaml.format.bracketSpacing": false,
+    "yaml.format.enable": false,
+    "azureML.yaml.format.enable": false,
+    "go-template.patterns": ["**/*.gotmpl"]
   }
 }

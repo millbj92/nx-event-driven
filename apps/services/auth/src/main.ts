@@ -14,7 +14,6 @@ const microserviceConfig: KafkaOptions = {
     client: {
       brokers: [
         `${process.env.AUTH_KAFKA_BROKER_HOST}:${process.env.AUTH_KAFKA_BROKER_PORT}`
-
       ],
     }
   }
@@ -28,7 +27,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice(microserviceConfig);
   app.enableCors({
-    origin: 'http://localhost:3002'
+    origin: '*'
   })
   const port = process.env.AUTH_PORT || 5002;
   app.startAllMicroservices();

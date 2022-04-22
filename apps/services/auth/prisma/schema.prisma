@@ -1,0 +1,93 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../../../node_modules/@prisma/client/users"
+  previewFeatures = ["filterJson", "fullTextSearch"]
+  binaryTargets   = ["native"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  password     String
+  verified     Boolean  @default(false)
+  verification String   @unique
+  isActive     Boolean  @default(true)
+  isBanned     Boolean  @default(false)
+  middle_name           String?
+  nickname              String?
+  preferred_username    String?
+  profile               String?
+  picture               String   @default("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y")
+  website               String?
+  gender                String?
+  birthdate             DateTime?
+  zoneInfo              String?
+  locale                String?
+  phone_number          String?
+  phone_number_verified Boolean   @default(false)
+  firstName    String
+  lastName     String
+  banDuration  Int      @default(0)
+  friendRequestIds  String[]
+  friendRequests    FriendRequest[]
+  friendRequestsSent FriendRequest[] @relation("FRIEND_REQUESTS_SENT")
+  userFriends       Friends[] @relation(name: "users")
+  friendUserFriends Friends[] @relation(name: "friend_users")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+}
+
+model Friends {
+  id           String      @id @default(cuid())
+  userId       String
+  friendUserId String
+  Users        User   @relation(name: "users", fields: [userId], references: [id])
+  FriendUsers  User   @relation(name: "friend_users", fields: [friendUserId], references: [id])
+  status       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, friendUserId])
+}
+
+
+model FriendRequest {
+  id           String   @id @default(cuid())
+  receiverId   String
+  receiver     User     @relation(fields: [receiverId], references: [id])
+  senderId     String   @unique
+  sender       User     @relation(name: "FRIEND_REQUESTS_SENT",fields: [senderId], references: [id])
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+}
+
+model Address {
+  id             String   @id @default(cuid())
+  userId         String
+  street_address String
+  locality       String
+  region         String
+  postal_code    String
+  country        String
+  updated_at     DateTime @updatedAt
+  createdAt      DateTime @default(now())
+}
+
+
+
+model Tenant {
+  id           String   @id @default(cuid())
+  clientSecret String   @default(cuid())
+  name         String
+  description  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

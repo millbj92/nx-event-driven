@@ -1,4 +1,3 @@
-
 FROM node:16.14.0-alpine as builder
 
 RUN apk update && apk add python3 make g++
@@ -10,4 +9,4 @@ WORKDIR /app/builder
 
 COPY . .
 
-RUN npm i && npm run prisma:generate-all
+RUN yarn install --frozen-lockfile  && yarn run prisma:generate-all

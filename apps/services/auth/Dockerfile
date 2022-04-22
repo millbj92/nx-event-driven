@@ -4,15 +4,15 @@ ARG NODE_ENV
 ARG BUILD_FLAG
 WORKDIR /app/builder
 COPY . .
-
 RUN npx nx run services-auth:build:production
 
-FROM ghcr.io/millbj92/sociium_base:latest
-
+FROM node:16.14.0-alpine
 WORKDIR /usr/src/app
-COPY --from=builder /app/builder ./
+RUN mkdir node_modules
+COPY --from=builder app/builder/node_modules ./node_modules
+COPY --from=builder app/builder/dist/apps/services/auth/ .
 ENV NODE_ENV=$NODE_ENV
 EXPOSE 5002
-CMD ["node", "./dist/apps/services/auth/main.js"]
+CMD ["node", "main.js"]
 
 LABEL org.opencontainers.image.authors="brandon@brandonmiller.io"

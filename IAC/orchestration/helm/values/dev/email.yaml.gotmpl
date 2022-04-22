@@ -1,0 +1,40 @@
+hosts:
+  - dev.sociium.io
+
+environment:
+  name: {{ .Environment.Name }}
+
+imagePullSecrets:
+  - name: email-dockerconfigjson
+
+app:
+  name: email
+  version: 0.0.1
+  group: backend
+  image:
+    repository: ghcr.io/millbj92/sociium_email
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    containerPort: 5099
+  service:
+    type: ClusterIP
+    port: 5099
+  config:
+    data:
+      - key: KAFKA_BROKER_PORT
+        value: "9092"
+      - key: KAFKA_BROKER_HOST
+        value: {{ requiredEnv "KAFKA_BROKER_HOST" | quote }}
+      - key: KAFKA_SERVICE_NAME
+        value: "EMAIL_SERVICE"
+      - key: KAFKA_CONSUMER_GROUP_ID
+        value: "auth-service-consumer-client"
+      - key: KAFKA_CLIENT_ID
+        value: "email-service-client"
+      - key: SENDGRID_API_KEY
+        value: {{ requiredEnv "SENDGRID_API_KEY" | quote }}
+      - key: VERIFY_TEMPLATE_ID
+        value: {{ requiredEnv "VERIFY_TEMPLATE_ID" | quote }}
+      - key: VERIFY_TEMPLATE_VERSION
+        value: "v1"

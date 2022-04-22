@@ -1,0 +1,38 @@
+hosts:
+  - dev.sociium.io
+
+environment:
+  name: {{ .Environment.Name }}
+
+imagePullSecrets:
+  - name: files-dockerconfigjson
+
+app:
+  name: files
+  version: 0.0.1
+  group: backend
+  image:
+    repository: ghcr.io/millbj92/sociium_files
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    containerPort: 5001
+  service:
+    type: ClusterIP
+    port: 5001
+  config:
+    data:
+      - key: DATABASE_URL
+        value: {{ requiredEnv "FILES_DB_URL" | quote }}
+      - key: PORT
+        value: 5001
+      - key: KAFKA_BROKER_PORT
+        value: "9092"
+      - key: KAFKA_BROKER_HOST
+        value: {{ requiredEnv "KAFKA_BROKER_HOST" | quote }}
+      - key: KAFKA_SERVICE_NAME
+        value: "FILE_SERVICE"
+      - key: KAFKA_CONSUMER_GROUP_ID
+        value: "file-service-consumer"
+      - key: KAFKA_CLIENT_ID
+        value: "file-service-client"

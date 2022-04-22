@@ -1,0 +1,42 @@
+hosts:
+  - dev.sociium.io
+
+environment:
+  name: {{ .Environment.Name }}
+
+imagePullSecrets:
+  - name: comments-dockerconfigjson
+
+app:
+  name: comments
+  version: 0.0.1
+  group: backend
+  image:
+    repository: ghcr.io/millbj92/sociium_comments
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    containerPort: 5000
+  service:
+    type: ClusterIP
+    port: 5000
+  config:
+    data:
+      - key: DATABASE_URL
+        value: {{ requiredEnv "COMMENT_DB_URL" | quote }}
+      - key: PORT
+        value: "5000"
+      - key: KAFKA_BROKER_PORT
+        value: "9092"
+      - key: KAFKA_BROKER_HOST
+        value: {{ requiredEnv "KAFKA_BROKER_HOST" | quote }}
+      - key: KAFKA_SERVICE_NAME
+        value: "COMMENT_SERVICE"
+      - key: KAFKA_CONSUMER_GROUP_ID
+        value: "comment-service-consumer"
+      - key: KAFKA_CLIENT_ID
+        value: "comment-service-client"
+      - key: AZURE_CM_URL
+        value: {{ requiredEnv "AZURE_CM_URL" | quote }}
+      - key: AZURE_CM_API_KEY
+        value: {{ requiredEnv "AZURE_CM_API_KEY" | quote }}

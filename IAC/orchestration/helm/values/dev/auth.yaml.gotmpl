@@ -1,0 +1,48 @@
+hosts:
+  - dev.sociium.io
+
+environment:
+  name: {{ .Environment.Name }}
+
+imagePullSecrets:
+  - name: auth-dockerconfigjson
+
+app:
+  name: auth
+  version: 0.0.1
+  group: backend
+  image:
+    repository: ghcr.io/millbj92/sociium_auth
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    containerPort: 5002
+  service:
+    type: ClusterIP
+    port: 5002
+  config:
+    data:
+      - key: AUTH_PORT
+        value: "5002"
+      - key: JWT_ISSUER
+        value: "auth.sociium.io"
+      - key: JWT_AUDIENCE
+        value: "auth.sociium.io"
+      - key: OPENID_ISSUER
+        value: "auth.sociium.io"
+      - key: CERT_DIR
+        value: ".cert"
+      - key: OPENID_JWKS_URI
+        value: "http://auth.sociium.io/.well-known/jwks.json"
+      - key: AUTH_KAFKA_BROKER_PORT
+        value: "9092"
+      - key: AUTH_KAFKA_SERVICE_NAME
+        value: "AUTH_SERVICE"
+      - key: AUTH_KAFKA_CONSUMER_GROUP_ID
+        value: "auth-service-consumer"
+      - key: AUTH_KAFKA_CLIENT_ID
+        value: "auth-service-client"
+      - key: AUTH_KAFKA_BROKER_HOST
+        value: {{ requiredEnv "KAFKA_BROKER_HOST" | quote }}
+      - key: DATABASE_URL
+        value: {{ requiredEnv "AUTH_DB_URL" | quote }}

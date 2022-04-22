@@ -8,17 +8,21 @@ import { CreateUserSchema } from './pipes/create-user.schema';
 import { User } from '@prisma/client/users';
 import { CommandBus } from '@nestjs/cqrs';
 import { LoginUserCommand, RegisterUserCommand, ResendVerificationCommand } from './cqrs/commands';
-import { HealthCheckService, HttpHealthIndicator, HealthCheck } from '@nestjs/terminus';
-
+import { HealthCheckService, HealthCheck, MemoryHealthIndicator, DiskHealthIndicator } from '@nestjs/terminus';
+import { getLogger } from '@super-rad-poc/services/shared';
 
 @Controller()
 export class AppController {
+  logger = getLogger();
   constructor(
     private readonly appService: AppService,
     private readonly commandBus: CommandBus,
     private readonly health: HealthCheckService,
-    private readonly http: HttpHealthIndicator
-    ) {}
+    private readonly memory: MemoryHealthIndicator,
+    private readonly disk: DiskHealthIndicator,
+  ) {
+
+  }
 
   @Get('/.well-known/jwks')
   async jwks() {
@@ -99,12 +103,13 @@ export class AppController {
     return token;
   }
 
-
-  @Get('health')
+  @Get('/health')
   @HealthCheck()
-  healthCheck() {
+  healthcheck() {
     return this.health.check([
-    () => this.http.pingCheck('google', 'https://google.com')
+      () => this.memory.checkHeap('memory_heap', 512 * 1024 * 1024),
+      () => this.memory.checkRSS('memory_rss', 512 * 1024 * 1024),
+      () => this.disk.checkStorage('storage', { threshold: 250 * 1024 * 1024 * 1024, path: '/' }),
     ])
   }
 }

@@ -1,0 +1,38 @@
+# Default values for auth.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+hosts:
+  - sociium.io
+
+imagePullSecrets:
+  - name: dockerconfigjson
+
+environment:
+  name: production
+
+app:
+  path: "/auth/"
+  version: "0.0.1"
+  name: auth
+  group: backend
+  image:
+    repository: ghcr.io/millbj92/sociium_auth
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+    containerPort: 5002
+  service:
+    type: ClusterIP
+    port: 5002
+  config:
+    data:
+      - key: key
+        value: value
+imageCredentials:
+  registry: ghcr.io
+  username: millbj92
+  email: millbj92@gmail.com
+  password:
+

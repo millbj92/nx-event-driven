@@ -122,4 +122,6 @@ export interface ITenant {
     updatedAt: Date;
 }
 
+export type ResponseType = "code" | "token" | "id_token" | "code token" | "code id_token" | "id_token token" | "code id_token token" | "none";
+export type RequestScope = "openid" | "profile" | "email" | "address" | "phone" | "offline_access";
 export type TenantForSignUp = Partial<ITenant> & Pick<ITenant, "name">;

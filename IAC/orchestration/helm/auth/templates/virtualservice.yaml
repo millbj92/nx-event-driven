@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.auth.name }}-vs
+spec:
+  hosts: {{- range $i, $host := .Values.hosts }}
+  - {{ $host }}
+  {{- end }}
+  gateways:
+  - dev-gateway
+  http:
+  - match:
+    - uri:
+        prefix: {{.Values.auth.path}}
+    rewrite:
+        uri: /
+    route:
+    - destination:
+        port:
+          number: 5002
+        host: {{.Values.auth.name}}-service

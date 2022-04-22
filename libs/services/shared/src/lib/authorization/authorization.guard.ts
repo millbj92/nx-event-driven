@@ -1,7 +1,8 @@
 import { CanActivate, Injectable, UnauthorizedException} from '@nestjs/common';
 import { expressJwtSecret} from 'jwks-rsa'
 import { promisify } from "util";
-import * as jwt from 'express-jwt';
+//import * as jwt from 'express-jwt';
+import jwt = require('express-jwt');
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Logger } from '@nestjs/common';
 import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
@@ -16,7 +17,7 @@ export class AuthorizationGuard implements CanActivate {
         const res = ctx.getArgByIndex(3);
         Logger.log('length ' + context.getArgs().length);
         Logger.log('auth ' + JSON.stringify(headers), 'AuthorizationGuard');
-    
+
         const checkJwt = promisify(jwt({
             secret: expressJwtSecret({
                 cache: true,

@@ -1,0 +1,77 @@
+environments:
+  default:
+    values:
+      - imageCredentials:
+          password: ref+vault://svc/github/#token
+  dev:
+    values:
+      - imageCredentials:
+          password: ref+vault://svc/github/#token
+  production:
+    values:
+      - imageCredentials:
+          password: ref+vault://svc/github/#token
+
+repositories:
+  - name: istio
+    url: https://istio-release.storage.googleapis.com/charts
+  - name: jetstack
+    url: https://charts.jetstack.io
+
+releases:
+  - name: auth
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/auth.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: comments
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/comments.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: email
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/email.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: files
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/files.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: messages
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/messages.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: notifications
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/notifications.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: posts
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/posts.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}
+  - name: tagging
+    chart: charts/sociium
+    installed: true
+    values:
+    - ./values/dev/tagging.yaml.gotmpl
+    - imageCredentials:
+        password: {{ .Values.imageCredentials.password | fetchSecretValue | quote }}

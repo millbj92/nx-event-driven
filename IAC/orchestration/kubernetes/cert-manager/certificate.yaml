@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: dev-sociium-io
+  namespace: istio-system
+spec:
+  secretName: dev-sociium-io-tls
+  issuerRef:
+    name: letsencrypt-prod
+  commonName: dev.sociium.io
+  dnsNames:
+  - dev.sociium.io

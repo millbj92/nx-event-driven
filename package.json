@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "npx nx run-many --target=serve --parallel=true --maxParallel=4 --projects=home,state,messages,main",
-    "prisma:generate-all": "npx nx run-many --target=prisma-generate --parallel=false --projects=services-comments,services-files,services-messages,services-notifications,services-posts,services-tagging,services-users,services-auth,services-email",
+    "prisma:generate-all": "npx nx run-many --target=prisma-generate --parallel=false --projects=services-comments,services-files,services-messages,services-notifications,services-posts,services-tagging,services-auth,services-email",
     "build": "nx build",
     "test": "nx test",
     "serve": "node ./tools/serve",
