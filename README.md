@@ -1,94 +1,65 @@
+## ⚡️ Quickstart
 
+In order to get started with this project, you will typically want to start with a kubernetes cluster. There are a multitude of different ways to obtain a cluster, but I have written out a couple of terraform files that can quickly spin you up a cluster on either DigitalOcean or Google Cloud.
 
-# SuperRadPoc
+Signing up for a DO or GCP account is out of scope for this documentation, so if you don't know how to do that please follow your provider's documentation first and come back to this documentation once you've set that up. You can obtain a free copy of terraform [here](https://www.terraform.io/docs). Please remember to contribute to Open Source software like this when you can in order to promote your own happiness, success, and joy.
 
-This project was generated using [Nx](https://nx.dev).
+All deployment-related code can be found within the [IaC](/IAC) folder. The terraform modules, not surprisingly, are located inside of the [Terraform](IAC/terraform) folder. From here you can choose to cd into either th [digitalocean-cluster](/IAC/terraform/digitalocean-cluster/) folder or the [gcp-cluster](IAC/terraform/gcp-cluster/) depending on your provider. If you are using another provider you can find the documentation to create modules for that on the [Terraform Registry](https://registry.terraform.io/).
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+Once you have picked your provider, ultimate happiness is imminent. Let's begin by initializing terraform:
 
-🔎 **Smart, Fast and Extensible Build System**
+```bash
+ terraform init
+```
 
-## Adding capabilities to your workspace
+You will see terraform saving you time and headaches as you go through the process. This is generally a good thing.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+Let's continue applying great vibes to our cluster:
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+```bash
+terraform plan
+```
 
-Below are our core plugins:
+Terraform will plan out the changes that will be made to your cluster. If terraform is unhappy with your changes, it will tell you what it thinks is wrong. Do not worry, it takes great care to not hurt your feelings. Google whatever problem it is telling you and then we can continue along the path to inner peace and joy.
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+If you are happy and ready for a successful life, you can apply the changes:
 
-There are also many [community plugins](https://nx.dev/community) you could add.
+```bash
+terraform apply
+```
 
-## Generate an application
+#### 🎉 Celebration break
 
-Run `nx g @nrwl/react:app my-app` to generate an application.
+You should now have a cluster up and running. If you are not, you can always go back and try again. We root for you and your general success. Please submit issues in times of sadness and frustration.
 
-> You can use any of the plugins above to generate applications as well.
+If, however, you are happy with the cluster, you can now begin a celebration of your success. Big steps have been taken, and there are more to come. Joy and dancing are recommended during this time.
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+## ⚙️ Installation
 
-## Generate a library
+Once you've gotten the cluster up and running, you can begin installing the k8's manifests. This is done by running the following command, if success is your goal:
 
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
+```bash
+kubectl apply -f IAC/orchestration/kubernetes/[name_of_manifest]
+```
 
-> You can also use any of the plugins above to generate libraries as well.
+For happiness, it is important to understand you must replace [name_of_manifest] with the name of the manifest you wish to apply.
 
-Libraries are shareable across libraries and applications. They can be imported from `@super-rad-poc/mylib`.
+If helm is your go-to, you can also use that with the templates in the [helm](IAC/orchestration/helm/). Helm is a package manager that can be used to suppliment your general happiness and joy during the k8's experience. I recommend achieving as much happiness as possible.
 
-## Development server
+## 🎯 Features
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+- [x] Kubernetes Hosting, with distributed design and deployment
+- [x] Helm Charts
+- [x] IaC with Terraform
+- [x] Social Media Platform
+- [x] RTC chat with people on friends list using Socket.io
+- [x] News Feed with ability to post, comment and like.
+- [x] Authentication using oidc
+- [x] User Profile with profile pic, bio, etc.
+- [ ] AI for insta-banning woke political statements (can turn off, but for general happiness and joy keep on)
+- [ ] Friends List
+- [ ] group chats
 
-## Code scaffolding
+## 📚️ Documentation
 
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+This ReadMe is a work in progress. I will be adding more features and documenting them as I go. Please check back for more - I know this is very incomplete and I take your happiness seriously, so please feel free to submit issues and suggestions.
