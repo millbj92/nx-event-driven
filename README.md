@@ -1,3 +1,15 @@
+<center>
+
+# Sociium
+
+<img src="resources/mascot/1x/mascot_hello.png" alt="Mascot Happy" width=200px>
+
+</br>
+
+An open-source, self-hosted social network using distributed architecture and event-driven design.
+
+</center>
+
 ## ⚡️ Quickstart
 
 In order to get started with this project, you will typically want to start with a kubernetes cluster. There are a multitude of different ways to obtain a cluster, but I have written out a couple of terraform files that can quickly spin you up a cluster on either DigitalOcean or Google Cloud.
@@ -63,3 +75,43 @@ If helm is your go-to, you can also use that with the templates in the [helm](IA
 ## 📚️ Documentation
 
 This ReadMe is a work in progress. I will be adding more features and documenting them as I go. Please check back for more - I know this is very incomplete and I take your happiness seriously, so please feel free to submit issues and suggestions.
+
+## 📌 Roadmap
+
+**Dates presented here are tentative and subject to change**
+
+```mermaid
+gantt
+dateFormat  YYYY-MM-DD
+title Sociium Roadmap
+excludes weekdays 2022-05-11
+
+section Frontend
+Design           :done,    des1, 2022-04-06,2022-04-20
+Development      :done,    dev1, 2022-04-13,2022-05-01
+Testing          :done,    test1, 2022-04-20,2022-05-07
+
+section Backend
+Authentication               :active,  des2, 2022-04-09, 2022-05-01
+Comments                    :active,  des3, 2022-04-16, 2022-05-04
+Email                       :active,  des4, 2022-04-23, 2022-05-11
+Messages                   :active,  des5, 2022-04-30, 2022-05-17
+News Feed                   :active,  des6, 2022-05-04, 2022-05-24
+Tagging                   :active,  des7, 2022-05-11, 2022-05-28
+Database                     :active,  des3, 2022-04-16, 2022-05-07
+
+
+section Deployment
+K8s               :         des4, after des3, 5d
+Helm              :         des5, after des4, 5d
+Terraform         :         des6, after des5, 5d
+
+```
+
+## 💎 Contributing
+
+Want to contribute? What a chad move!
+
+I'm always open to ideas and suggestions. If you find/have a suggestion, please submit an issue so we can track it properly and get to work on it.
+
+If you'd like to contribute your suggested change please submit a pull request! This project follows the [Git Flow](https://datasift.github.io/gitflow/IntroducingGitFlow.html) branching model. Essentially, once you pull the code, create a branch for your change and commit it. Once that's done you ca submit a pull request to then be reviewed and merged later. This generally promotes greater happiness and joy for all collaborators.
