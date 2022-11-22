@@ -110,7 +110,7 @@
     "@nestjs/microservices": "^8.4.1",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
-    "@nestjs/platform-socket.io": "^8.4.3",
+    "@nestjs/platform-socket.io": "^8.4.7",
     "@nestjs/schedule": "^1.0.2",
     "@nestjs/serve-static": "^2.2.2",
     "@nestjs/terminus": "^8.0.6",
